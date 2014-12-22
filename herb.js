@@ -10,7 +10,8 @@ var config = defaults = {
 		indent: 4,
 		offset: 2
 	},
-	verbose: 3 // 4: Info, 3: Log, 2: Warn, 1: Error
+	verbose: 3, // 4: Info, 3: Log, 2: Warn, 1: Error
+	testSuite: false
 }
 
 // Memory buffers
@@ -25,7 +26,15 @@ module.exports = {
 
 	config: function(userConfig){
 	   _.defaults(userConfig, defaults);
-	   config = userConfig; 
+	   _.defaults(userConfig, config);
+	   config = userConfig;
+	},
+
+	parse: function(){
+		parse.logType(config, buffers, arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
+			var callback = parsed.shift();
+			callback.apply(this, parsed);
+                });
 	},
 
 	info: function(){
@@ -61,12 +70,27 @@ module.exports = {
 	},
 	clearLine: function(){
 		process.stdout.clearLine();
+		process.stdout.cursorTo(0);
 	},
 	writeLine: function(){
 		process.stdout.cursorTo(0);
 		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
-			process.stdout.write.apply(this, parsed);
+			process.stdout.write(parsed[0]);
 		});
+	},
+	progress: function(progress){
+		process.stdout.clearLine();
+		function loop(i){
+			setTimeout(function () {
+			if(i<1) process.stdout.write("[ ");
+			else if(i==process.stdout.columns-3) process.stdout.write(" ]");
+			else   
+			process.stdout.write("=");
+               
+      			if (i++<=process.stdout.columns-3) loop(i);
+   			}, 50)
+		}
+		loop(0);
 	},
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
@@ -75,7 +99,7 @@ module.exports = {
 	},
 	group: function(label){
 		buffers.group.push('label');
-		parse.logType(config, buffers, [label], { verbosity: 0, color: 'bold', title: true }, function(parsed){
+		parse.logType(config, buffers, [label], { verbosity: 2, color: 'bold', title: true }, function(parsed){
 			native_console.log.apply(this, parsed);
 		});
 	},

@@ -10,8 +10,9 @@ module.exports = {
 		// Unify arguments
 		arguments = _.toArray(arguments);
 
-		if(config.verbose < options.verbose) return null;
-		
+		if((config.verbose < options.verbosity)&&(!options.strict)) return null;
+		if((config.verbose < options.verbosity)&&(options.strict)) return callback([arguments[0],undefined]);
+
 		if(!options.title) options.title = false;
 		
 		_.forEach(arguments, function(argument, index, arguments) {
@@ -20,12 +21,16 @@ module.exports = {
 				argument = color(options.color, (argument));
 				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
 			}
-			if(_.isObject(argument)) argument = color(options.color, stringify(argument,config.json));
+			if((_.isObject(argument))&&(!_.isFunction(argument))) argument = color(options.color, stringify(argument,config.json));
+			if((_.isFunction(argument))&&(index!=0)) argument = argument.toString();
 			
 			arguments[index] = argument;
 		});
 
-		if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(group.render(options.title, buffers.group.length));
+		// If index 0 is function add group render to index 1
+		// Else add it to index 0
+		if((buffers.group.length)&&(options.strict)) arguments.splice(1, 0, group.render(options.title, buffers.group.length));
+		else if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(group.render(options.title, buffers.group.length));
 		
 		callback(arguments);
 	},

@@ -1,3 +1,5 @@
+var chalk = require('chalk');
+
 module.exports = {
 	render: function(isTitle, length){
 		var cString = "";
@@ -9,6 +11,6 @@ module.exports = {
 		for(i=i; i<length; i++){ cString += template }
 		if(isTitle) cString += "> ";
 		
-		return cString;
+		return chalk.bold(cString);
 	}
 }
