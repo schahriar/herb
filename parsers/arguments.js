@@ -4,6 +4,7 @@ var chalk = require('chalk');
 var stringify = require('json-stringify');
 // Source
 var group = require('./group');
+var count = require('./count');
 
 module.exports = {
 	logType: function(config, buffers, arguments, options, callback) {
@@ -19,6 +20,17 @@ module.exports = {
 
 		if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(group.render(options.title, buffers.group.length));
 		else if(buffers.group.length) arguments = [group.render(options.title, buffers.group.length), arguments];
+		
 		callback(arguments);
+	},
+	count: function(config, buffers, label, options, callback) {
+		if(config.verbose < options.verbose) return null;
+		
+		// Specs: https://developer.mozilla.org/en-US/docs/Web/API/Console.count
+		if(!label) label = "";
+		if(!buffers.count[label]) buffers.count[label] = 1;
+		  else buffers.count[label]++;
+		
+		callback([chalk.[options.color](label + ' : ' + buffers.count[label])]);
 	}
 }

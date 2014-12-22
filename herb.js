@@ -1,7 +1,5 @@
 // Modules
 var _ = require('lodash');
-var chalk = require('chalk');
-var stringify = require('json-stringify');
 // Source
 var parse = require('./parsers/arguments');
 // Clean copy
@@ -62,13 +60,8 @@ module.exports = {
 		process.stdout.write('\u001B[2J\u001B[0;0f');
 	},
 	count: function(label){
-		// Specs: https://developer.mozilla.org/en-US/docs/Web/API/Console.count
-		if(!label) label = "";
-		if(!buffers.count[label]) buffers.count[label] = 1;
-		  else buffers.count[label]++;
-
-		parse.logType(config, buffers, arguments, { verbosity: 0, color: 'reset' }, function(parsed){
-			native_console.log.apply(this, [chalk.blue(label + ' : ' + buffers.count[label])]);
+		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
+			native_console.log.apply(this, parsed);
 		});
 	},
 	group: function(label){
