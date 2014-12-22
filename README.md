@@ -1,6 +1,6 @@
-herb
-======
-Add some true flavour to your NodeJS console
+![Herbal Logo](logo.png)
+
+Add some true flavour to your **NodeJS** console
 ======
 
 **herb** is a magical layer for the most complex of all *verbosities*. To put it in simple words it enables advanced functions missing in the current Node logging system (console.log). **You can group, count, and soon add progressbars & tables** all in *color!* and the best part about it is the fact that you can just replace the global ***console*** with **herb** without further modifications.
@@ -53,19 +53,14 @@ herb.config({
 ## Methods
 **Log** (color:blue, verbosity:3) -> herb.log(log)
 
----------------
 **Info** (color:blue, verbosity:4) -> herb.info(log)
 
----------------
 **Warn** (color:yellow, verbosity:2) -> herb.warn(log)
 
----------------
 **Error** (color:red, verbosity:1) -> herb.error(log)
 
----------------
 **Clear** "Clears console" -> herb.clear()
 
----------------
 **Count** "Counts to label" -> herb.count(label)
 ```javascript
 herb.count("Apples");
