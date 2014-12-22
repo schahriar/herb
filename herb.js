@@ -64,7 +64,9 @@ module.exports = {
 	},
 	writeLine: function(){
 		process.stdout.cursorTo(0);
-		process.stdout.write(arguments[0]);
+		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
+			process.stdout.write.apply(this, parsed);
+		});
 	},
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){

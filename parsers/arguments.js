@@ -1,9 +1,9 @@
 // Modules
 var _ = require('lodash');
-var chalk = require('chalk');
 var stringify = require('json-stringify');
 // Source
 var group = require('./group');
+var color = require('./color');
 
 module.exports = {
 	logType: function(config, buffers, arguments, options, callback) {
@@ -17,10 +17,10 @@ module.exports = {
 		_.forEach(arguments, function(argument, index, arguments) {
 			
 			if(_.isString(argument)) {
-				argument = chalk[options.color](argument);
+				argument = color(options.color, (argument));
 				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
 			}
-			if(_.isObject(argument)) argument = chalk[options.color](stringify(argument,config.json) );
+			if(_.isObject(argument)) argument = color(options.color, stringify(argument,config.json));
 			
 			arguments[index] = argument;
 		});
@@ -37,6 +37,6 @@ module.exports = {
 		if(!buffers.count[label]) buffers.count[label] = 1;
 		  else buffers.count[label]++;
 		
-		callback([group.render(options.title, buffers.group.length),chalk[options.color](label + ' : ' + buffers.count[label])]);
+		callback([group.render(options.title, buffers.group.length),color(options.color, label + ' : ' + buffers.count[label])]);
 	}
 }
