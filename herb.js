@@ -86,7 +86,7 @@ module.exports = {
 	},
 	group: function(label){
 	   buffers.group.push('label');
-	   native_console.log(internals.renderGroups() + chalk.bold(label));
+	   native_console.log(internals.renderGroups(true) + chalk.bold(label));
 	},
 	groupEnd: function(){
 	   // Remove last element from the array
@@ -95,10 +95,15 @@ module.exports = {
 }
 
 var internals = {
-	renderGroups: function(){
+	renderGroups: function(isTitle){
 		var cString = "";
 		var template = "| ";
-		buffers.group.forEach(function(){ cString += template  });
+		
+		var i = 0;
+		
+		if(isTitle) i = -1;
+		for(i=i; i<buffers.group.length; i++){ cString += template }
+		if(isTitle) cString += "> ";
 		
 		return cString;
 	}
