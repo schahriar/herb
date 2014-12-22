@@ -25,6 +25,9 @@ module.exports = {
 	_rows: function(){ return process.stdout.rows },
 
 	config: function(userConfig){
+		// Made verbose & verbosity attributes flexible
+		if((_.isInteger(userConfig.verbosity))&&(!userConfig.verbose)) userConfig.verbose = userConfig.verbosity;
+		
 	   _.defaults(userConfig, defaults);
 	   _.defaults(userConfig, config);
 	   config = userConfig;
