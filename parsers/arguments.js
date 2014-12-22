@@ -4,7 +4,6 @@ var chalk = require('chalk');
 var stringify = require('json-stringify');
 // Source
 var group = require('./group');
-var count = require('./count');
 
 module.exports = {
 	logType: function(config, buffers, arguments, options, callback) {
@@ -31,6 +30,6 @@ module.exports = {
 		if(!buffers.count[label]) buffers.count[label] = 1;
 		  else buffers.count[label]++;
 		
-		callback([chalk.[options.color](label + ' : ' + buffers.count[label])]);
+		callback([group.render(options.title, buffers.group.length),chalk[options.color](label + ' : ' + buffers.count[label])]);
 	}
 }

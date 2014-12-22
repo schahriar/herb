@@ -1,5 +1,5 @@
 var console = require("./herb");
-var interval = undefined;
+var interval = {};
 var count = 0;
 
 console.log("test","test2",[2,3,4]);
@@ -20,9 +20,22 @@ setTimeout(function(){
 	console.clear();
 	console.warn("Console cleared");
 	console.info("Counting to 5");
-	interval = setInterval(function(){
+	interval.one = setInterval(function(){
 		++count;
-		if(count >= 5) clearInterval(interval);
+		if(count >= 5) clearInterval(interval.one);
 		console.count();
-	},1000);
-},5000);
+	},400);
+	setTimeout(function(){
+		var count = 0;
+		console.clear();
+        	console.warn("Console cleared");
+        	console.group("Counting to 5 with labels under two groups");
+		console.warn("Here we go!");
+		console.group("Group Title");
+        	interval.two = setInterval(function(){
+     	            ++count;
+    	            if(count >= 5) clearInterval(interval.two);
+                    console.count('label');
+        	},400);
+	},3000);
+},3000);
