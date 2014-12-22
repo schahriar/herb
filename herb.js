@@ -59,6 +59,13 @@ module.exports = {
 	clear: function(){
 		process.stdout.write('\u001B[2J\u001B[0;0f');
 	},
+	clearLine: function(){
+		process.stdout.write('\033[0G');
+	},
+	write: function(){
+		process.stdout.write('\033[0G');
+		process.stdout.write(arguments[0] + "\r");
+	},
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
 			native_console.log.apply(this, parsed);
