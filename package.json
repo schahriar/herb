@@ -4,7 +4,8 @@
   "description": "Add some flavor to your Node CLI!",
   "main": "herb.js",
   "scripts": {
-    "test": "node test"
+    "test": "node test",
+    "advanced": "node advanced_test"
   },
   "repository": {
     "type": "git",
