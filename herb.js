@@ -101,10 +101,10 @@ var internals = {
 		
 		var i = 0;
 		
-		if(isTitle) i = -1;
+		if(isTitle) i = 1;
 		for(i=i; i<buffers.group.length; i++){ cString += template }
 		if(isTitle) cString += "> ";
 		
-		return cString;
+		return chalk.bold(cString);;
 	}
 }
