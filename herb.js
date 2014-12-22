@@ -68,7 +68,7 @@ module.exports = {
 		  else buffers.count[label]++;
 
 		parse.logType(config, buffers, arguments, { verbosity: 0, color: 'reset' }, function(parsed){
-			native_console.log.apply(this, [chalk.blue(label + ' : ' + buffers.count[label])]));
+			native_console.log.apply(this, [chalk.blue(label + ' : ' + buffers.count[label])]);
 		});
 	},
 	group: function(label){

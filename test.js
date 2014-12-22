@@ -2,6 +2,7 @@ var console = require("./herb");
 var interval = undefined;
 var count = 0;
 
+console.log("test","test2",[2,3,4]);
 console.config({verbose:4});
 console.group('New Group');
 console.log("No. of columns: " + console._columns());

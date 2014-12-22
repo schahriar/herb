@@ -9,6 +9,6 @@ module.exports = {
 		for(i=i; i<length; i++){ cString += template }
 		if(isTitle) cString += "> ";
 		
-		return chalk.bold(cString);
+		return cString;
 	}
 }
