@@ -14,11 +14,18 @@ module.exports = {
 		
 		if(!options.title) options.title = false;
 		
-		if(_.isString(arguments[0])) arguments[0] = chalk[options.color](arguments[0]);
-		if(_.isObject(arguments[0])) arguments[0] = chalk[options.color](stringify(arguments[0],config.json) );
+		_.forEach(arguments, function(argument, index, arguments) {
+			
+			if(_.isString(argument)) {
+				argument = chalk[options.color](argument);
+				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
+			}
+			if(_.isObject(argument)) argument = chalk[options.color](stringify(argument,config.json) );
+			
+			arguments[index] = argument;
+		});
 
 		if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(group.render(options.title, buffers.group.length));
-		else if(buffers.group.length) arguments = [group.render(options.title, buffers.group.length), arguments];
 		
 		callback(arguments);
 	},

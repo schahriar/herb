@@ -30,7 +30,7 @@ setTimeout(function(){
 		console.clear();
         	console.warn("Console cleared");
         	console.group("Counting to 5 with labels under two groups");
-		console.warn("Here we go!");
+		console.warn("Here we go!\n\n");
 		console.group("Group Title");
         	interval.two = setInterval(function(){
      	            ++count;
