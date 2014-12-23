@@ -64,5 +64,9 @@ npm test
 ```
 *I'll soon add a visual test.*
 
+## Contributing
+The goal is to create a *rich command-line interface experience* for NodeJS.
+I am currently looking for active contributors to create **documentation**, **improve** the code and add **innovations** to the module. If you are interested you can contact me directly at <info@schahriar.com>!
+
 ## License
 MIT © Schahriar SaffarShargh <info@schahriar.com>
