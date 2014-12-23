@@ -3,6 +3,8 @@
 Add some true flavour to your **NodeJS** console
 ======
 
+> **herb** is one day old! I had a 24 hour run since I came across how little the Node console or even substitutes offer and how much of Node's functionality with CLI is currently undocumented thus I decided to create **herb** to fill the gap that comes with Node and take it a step further. **Note that herb is currently in early stages of alpha and soon will include great additions that not only will correct the Node console but also add a rich layer of user-experience to your CLI!** With that being said **herb** will stay true to its nature as an additional layer and most of the methods you'll use today will consistently make it to the next.
+
 **herb** is a magical layer for the most complex of all *verbosities*. To put it in simple words it enables advanced functions missing in the current Node logging system (console.log). **You can group, count, and soon add progressbars & tables** all in *color!* and the best part about it is the fact that you can just replace the global ***console*** with **herb** without further modifications.
 
 ## Installation
