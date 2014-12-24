@@ -1,5 +1,6 @@
 // Modules
 var _ = require('lodash');
+var chalk = require('chalk');
 // Source
 var parse = require('./parsers/arguments');
 // Clean copy
@@ -11,6 +12,7 @@ var config = defaults = {
 		offset: 2
 	},
 	verbose: 3, // 4: Info, 3: Log, 2: Warn, 1: Error
+	prependTime: false,
 	testSuite: false
 }
 
@@ -82,16 +84,17 @@ module.exports = {
 		});
 	},
 	progress: function(progress){
+		process.stdout.write("\n");
 		process.stdout.clearLine();
 		function loop(i){
 			setTimeout(function () {
-			if(i<1) process.stdout.write("[ ");
-			else if(i==process.stdout.columns-3) process.stdout.write(" ]");
-			else   
-			process.stdout.write("=");
+			if(i<2) process.stdout.write(" ");
+			else if(i > process.stdout.columns-4) { process.stdout.write("\n\n") }
+			else
+			process.stdout.write(chalk.cyan("■"));
                
-      			if (i++<=process.stdout.columns-3) loop(i);
-   			}, 50)
+      			if (i++<=process.stdout.columns-4) loop(i);
+   			}, 25)
 		}
 		loop(0);
 	},

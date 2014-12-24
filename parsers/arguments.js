@@ -32,6 +32,11 @@ module.exports = {
 		if((buffers.group.length)&&(options.strict)) arguments.splice(1, 0, group.render(options.title, buffers.group.length));
 		else if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(group.render(options.title, buffers.group.length));
 		
+		// Prepend time
+		var now = new Date();
+		now._f = "[" + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "] ";
+		if((!options.strict)&&(config.prependTime)) arguments.unshift(color("dim",now._f));
+		
 		callback(arguments);
 	},
 	count: function(config, buffers, label, options, callback) {

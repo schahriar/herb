@@ -46,9 +46,12 @@ herb.config({
     indent: 4,
     offset: 2 
   },
+
   // Verbosity of logs (integer)
   // Note that higher numbers cover the entire group e.g. 3 = ['Log','Warn','Error']
-  verbose: 3 // 4: Info, 3: Log, 2: Warn, 1: Error, 0: Fatal
+  verbose: 3, // 4: Info, 3: Log, 2: Warn, 1: Error, 0: Fatal
+
+  prependTime: false // Prepends time [hour:minute:seconds] to every log if enabled
 })
 ```
 
