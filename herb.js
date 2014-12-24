@@ -2,7 +2,8 @@
 var _ = require('lodash');
 var chalk = require('chalk');
 // Source
-var parse = require('./parsers/arguments');
+var parse = require('./lib/arguments');
+var progress = require('./lib/progress');
 // Clean copy
 var native_console = console;
 
@@ -83,21 +84,7 @@ module.exports = {
 			process.stdout.write(parsed[0]);
 		});
 	},
-	progress: function(progress){
-		process.stdout.write("\n");
-		process.stdout.clearLine();
-		function loop(i){
-			setTimeout(function () {
-			if(i<2) process.stdout.write(" ");
-			else if(i > process.stdout.columns-4) { process.stdout.write("\n\n") }
-			else
-			process.stdout.write(chalk.cyan("■"));
-               
-      			if (i++<=process.stdout.columns-4) loop(i);
-   			}, 25)
-		}
-		loop(0);
-	},
+	progress: progress,
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
 			native_console.log.apply(this, parsed);
