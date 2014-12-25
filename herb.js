@@ -2,6 +2,7 @@
 var _ = require('lodash');
 var chalk = require('chalk');
 // Source
+var culinary = require('./lib/culinary');
 var parse = require('./lib/arguments');
 var progress = require('./lib/progress');
 // Clean copy
@@ -71,9 +72,9 @@ module.exports = {
 	assert: function(){ native_console.assert.apply(this, arguments) },
 
 	// Extended
-	clear: function(){
-		process.stdout.write('\u001B[2J\u001B[0;0f');
-	},
+	culinary: culinary,
+	
+	clear: this.culinary.clearScreen,
 	clearLine: function(){
 		process.stdout.clearLine();
 		process.stdout.cursorTo(0);
