@@ -74,7 +74,7 @@ module.exports = {
 	// Extended
 	culinary: culinary,
 	
-	clear: this.culinary.clearScreen,
+	clear: culinary.clearScreen,
 	clearLine: function(){
 		process.stdout.clearLine();
 		process.stdout.cursorTo(0);
