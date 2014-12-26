@@ -7,15 +7,15 @@ var should = chai.should();
 var expect = chai.expect;
 
 var look = {
-	escape: "\\u001b[",
-	reset: "39m",
+	escape: "\u001b[",
+	reset: "0m",
 	resetBold: "22m",
 	
 	blue: function(string){
-		return this.escape.concat("34m",string,this.escape,this.reset);
+		return this.escape.concat("049;34m",string,this.escape,this.reset);
 	},
 	bold: function(string){
-		return this.escape.concat("1m",string,this.escape,this.resetBold);
+		return this.escape.concat("01;49;39m",string,this.escape,this.reset);
 	}
 }
 

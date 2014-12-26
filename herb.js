@@ -1,8 +1,7 @@
 // Modules
 var _ = require('lodash');
-var chalk = require('chalk');
+var culinary = require('culinary');
 // Source
-var culinary = require('./lib/culinary');
 var parse = require('./lib/arguments');
 var progress = require('./lib/progress');
 // Clean copy
