@@ -1,5 +1,6 @@
 var _ = require("lodash");
 var inspector = require("util").inspect;
+var cook = require("culinary").style;
 
 // Bunch of defaults
 var empty = "", space = " ", comma = ",", column = ":", newLine = "\n";
@@ -13,13 +14,13 @@ module.exports = {
 		return inspector(object, showHidden, depth, hasColor);
 	},
 	prettyPlease: function(object){
-		var product = new prettify(object);
+		var product = new humanify(object);
 		
 		return product.scan();
 	}
 }
 
-var prettify = function(object) {
+var humanify = function(object) {
 	var _this = this;
 
 	this.object = object;
@@ -33,30 +34,34 @@ var prettify = function(object) {
                 	return value + ((index<last)?comma:"");
         	},
         	objectValue: function(key, value, padding) {
-                	return key.toString() + ":" + _this._repeat(padding+2," ")  + value.toString() + "\n";
+                	return cook(key.toString()).spice("green") + ":" + _this._repeat(padding+2," ")  + value.toString() + "\n";
        		}
 	}
 }
 
-prettify.prototype._isTrueObject = function(object){
+humanify.prototype._isTrueObject = function(object){
 	return ((_.isObject(object))&&(!_.isArray(object)))
 }
 
-prettify.prototype._repeat = function(n, string) {
+humanify.prototype._repeat = function(n, string) {
     n= n || 0;
     return Array(n+1).join(string);
 }
 
-prettify.prototype.scan = function(object, depth) {
+humanify.prototype.scan = function(object, depth) {
 	depth = depth || 0;
 	object = object || this.object;
 	
 	var _this = this;
 	var product = empty;
-	var padding = _this._calculatePadding(object);
 	
-	// If it is an object with Key: Value then send deeper levels one line down
-	if(this._isTrueObject(object)) product += newLine;
+	// If it is an object with Key: Value
+	if(this._isTrueObject(object)){
+		// then send deeper levels one line down
+		product += newLine;
+		// and calculate total padding to unify the looks
+		_this._calculatePadding(object)
+	}
 	
 	// Go through object(s)
 	_.each(object, function(value, key, scope){
@@ -75,7 +80,7 @@ prettify.prototype.scan = function(object, depth) {
 	return product;
 }
 
-prettify.prototype._calculatePadding = function(object) {
+humanify.prototype._calculatePadding = function(object) {
 	var padding = 0;
 	var paddingObject = {};
 	// Go through object
