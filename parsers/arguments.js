@@ -1,10 +1,10 @@
 // Modules
 var _ = require('lodash');
-var stringify = require('json-stringify');
 var culinary = require("culinary");
 var cook = culinary.style;
 // Source
-var group = require('./group');
+var group = require('./groups');
+var objects = require('./objects');
 
 module.exports = {
 	logType: function(config, buffers, arguments, options, callback) {

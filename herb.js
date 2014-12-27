@@ -2,8 +2,8 @@
 var _ = require('lodash');
 var culinary = require('culinary');
 // Source
-var parse = require('./lib/arguments');
-var progress = require('./lib/progress');
+var parse = require('./parcers/arguments');
+var progress = require('./parcers/progress');
 // Clean copy
 var native_console = console;
 
@@ -23,7 +23,7 @@ var buffers = {
 	group: []
 }
 
-module.exports = {
+var herb = {
 	_columns: function(){ return process.stdout.columns },
 	_rows: function(){ return process.stdout.rows },
 
@@ -74,12 +74,9 @@ module.exports = {
 	culinary: culinary,
 	
 	clear: culinary.clearScreen,
-	clearLine: function(){
-		process.stdout.clearLine();
-		process.stdout.cursorTo(0);
-	},
+	clearLine: culinary.eraseLine,
 	writeLine: function(){
-		process.stdout.cursorTo(0);
+		culinary.cursorTo(0);
 		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
 			process.stdout.write(parsed[0]);
 		});
@@ -101,3 +98,5 @@ module.exports = {
 	   buffers.group.pop();
 	}
 }
+
+module.exports = herb;
