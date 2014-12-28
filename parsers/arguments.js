@@ -3,9 +3,10 @@ var _ = require("lodash");
 var culinary = require("culinary");
 var cook = culinary.style;
 // Source
+var utils = require("../lib/utils");
 var group = require("./groups");
 var stringify = require("./objects").render;
-var utils = require("../lib/utils");
+var alignment = require('./alignment');
 
 module.exports = {
 	logType: function(config, buffers, arguments, options, callback) {
@@ -24,13 +25,7 @@ module.exports = {
 				argument = cook(argument).spice(options.color);
 				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
 			
-				if(options.alignment === 'center') {
-					var width = process.stdout.columns;
-					var textWidth = original.length;
-					var position = (width - textWidth)/2;
-					
-					argument = utils.repeat(position, " ") + argument + "\n";
-				}
+				if(_.isString(options.alignment)) argument = alignment(original, options.alignment);
 			}
 			if((_.isObject(argument))&&(!_.isFunction(argument))) argument = cook(stringify(argument,config.json)).spice(options.color);
 			if((_.isFunction(argument))&&(index!=0)) argument = argument.toString();
