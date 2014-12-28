@@ -28,7 +28,7 @@ module.exports = {
 					var textWidth = argument.length;
 					var position = (width - textWidth)/2;
 					
-					argument = utils.repeat(position, " " + argument + "\n";
+					argument = utils.repeat(position, " ") + argument + "\n";
 				}
 			}
 			if((_.isObject(argument))&&(!_.isFunction(argument))) argument = cook(stringify(argument,config.json)).spice(options.color);
