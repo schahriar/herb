@@ -1,4 +1,5 @@
 var _ = require("lodash");
+var utils = require("../lib/utils");
 var inspector = require("util").inspect;
 var cook = require("culinary").style;
 
@@ -33,7 +34,7 @@ var humanify = function(object) {
                 	return value + ((index<last)?comma:"");
         	},
         	objectValue: function(key, value, padding) {
-                	return cook(key.toString()).spice("cyan") + ":" + _this._repeat(padding+2," ")  + this.color(value)  + "\n";
+                	return cook(key.toString()).spice("cyan") + ":" + utils.repeat(padding+2," ")  + this.color(value)  + "\n";
        		},
 		color: function(value){
 			var styles = [];
@@ -48,15 +49,6 @@ var humanify = function(object) {
 	}
 }
 
-humanify.prototype._isTrueObject = function(object){
-	return ((_.isObject(object))&&(!_.isArray(object)))
-}
-
-humanify.prototype._repeat = function(n, string) {
-    n= n || 0;
-    return Array(n+1).join(string);
-}
-
 humanify.prototype.scan = function(object, depth) {
 	depth = depth || 0;
 	object = object || this.object;
@@ -66,7 +58,7 @@ humanify.prototype.scan = function(object, depth) {
 	var product = empty;
 	
 	// If it is an object with Key: Value
-	if(this._isTrueObject(object)){
+	if(utils.isTrueObject(object)){
 		// then send deeper levels one line down
 		product += newLine;
 		// and calculate total padding to unify the looks
@@ -79,7 +71,7 @@ humanify.prototype.scan = function(object, depth) {
 	_.each(object, function(value, key, scope){
 		if(value.constructor === Function) value = "[Function: " + value.name + "]";
 		// Render depth
-		if(_this._isTrueObject(scope)) product += _this._repeat(depth,"    ");
+		if(utils.isTrueObject(scope)) product += utils.repeat(depth,"    ");
 
 		// If Value is an object then go one level deeper & so on
 		if(_.isObject(value)) value = _this.scan(value, depth+1);
