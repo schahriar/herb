@@ -18,14 +18,15 @@ module.exports = {
 		if(!options.title) options.title = false;
 		
 		_.forEach(arguments, function(argument, index, arguments) {
-			
+			var original = argument;
+
 			if(_.isString(argument)) {
 				argument = cook(argument).spice(options.color);
 				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
 			
 				if(options.alignment === 'center') {
 					var width = process.stdout.columns;
-					var textWidth = argument.length;
+					var textWidth = original.length;
 					var position = (width - textWidth)/2;
 					
 					argument = utils.repeat(position, " ") + argument + "\n";
