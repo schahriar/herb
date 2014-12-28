@@ -8,8 +8,9 @@ var alignment = function(string, align) {
 	
 	_.each(words, function(word, key){
 		var currentLine = (!lines.length)?0:lines.length-1;
+		var currentLength = (lines[currentLine])?lines[currentLine].length:0;
 		
-		if((lines[currentLine].length + word.length) < width) {
+		if((currentLength + word.length) < width) {
 			// If current line has available space add words
 			lines[currentLine] += word + utils.char.space;
 		}
