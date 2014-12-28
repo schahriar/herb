@@ -4,7 +4,7 @@ var culinary = require("culinary");
 var cook = culinary.style;
 // Source
 var group = require('./groups');
-var objects = require('./objects');
+var stringify = require('./objects').render;
 
 module.exports = {
 	logType: function(config, buffers, arguments, options, callback) {
@@ -21,6 +21,14 @@ module.exports = {
 			if(_.isString(argument)) {
 				argument = cook(argument).spice(options.color);
 				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
+			
+				if(options.alignment === 'center') {
+					var width = process.stdout.columns;
+					var textWidth = argument.length;
+					var position = (width - textWidth)/2;
+					
+					argument = position + argument + "\n";
+				}
 			}
 			if((_.isObject(argument))&&(!_.isFunction(argument))) argument = cook(stringify(argument,config.json)).spice(options.color);
 			if((_.isFunction(argument))&&(index!=0)) argument = argument.toString();

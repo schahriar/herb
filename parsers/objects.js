@@ -15,8 +15,7 @@ module.exports = {
 	},
 	prettyPlease: function(object){
 		var product = new humanify(object);
-		
-		return product.scan();
+		return product.scan()+newLine;
 	}
 }
 
@@ -27,15 +26,25 @@ var humanify = function(object) {
 	this.wrap = {
         	space: function(value) { return space + value + space; },
         	arrayValue: function(value,index,last) {
-                	value = value.toString();
+                	value = this.color(value);
 
                 	if(index == 0) value = "[" + value;
-                	if(index == last) value = value + "]";
+                	if(index == last) value = value + "] ";
                 	return value + ((index<last)?comma:"");
         	},
         	objectValue: function(key, value, padding) {
-                	return cook(key.toString()).spice("green") + ":" + _this._repeat(padding+2," ")  + value.toString() + "\n";
-       		}
+                	return cook(key.toString()).spice("cyan") + ":" + _this._repeat(padding+2," ")  + this.color(value)  + "\n";
+       		},
+		color: function(value){
+			var styles = [];
+			value = value.toString();
+
+			if((value == "true")||(value == "false")) styles.push("green");
+			else if(!isNaN(value)) styles.push("yellow");
+			else if(value.match(/^[\[Function]+/) == "[Function") styles.push("bgWhite","red")
+			else styles.push("dim");
+			return (styles.length)?(cook.apply({string:value},styles)):value;
+		}
 	}
 }
 
@@ -53,6 +62,7 @@ humanify.prototype.scan = function(object, depth) {
 	object = object || this.object;
 	
 	var _this = this;
+	var padding = 1;
 	var product = empty;
 	
 	// If it is an object with Key: Value
@@ -60,11 +70,14 @@ humanify.prototype.scan = function(object, depth) {
 		// then send deeper levels one line down
 		product += newLine;
 		// and calculate total padding to unify the looks
-		_this._calculatePadding(object)
+		padding = _this._calculatePadding(object);
+		object = padding[1];
+		padding = padding[0];
 	}
 	
 	// Go through object(s)
 	_.each(object, function(value, key, scope){
+		if(value.constructor === Function) value = "[Function: " + value.name + "]";
 		// Render depth
 		if(_this._isTrueObject(scope)) product += _this._repeat(depth,"    ");
 
@@ -77,7 +90,7 @@ humanify.prototype.scan = function(object, depth) {
 	});
 	
 	// Currently this does not return (this) but I'll soon add that to enable more methods and chaining
-	return product;
+	return product.slice(0,-1);
 }
 
 humanify.prototype._calculatePadding = function(object) {
@@ -87,8 +100,16 @@ humanify.prototype._calculatePadding = function(object) {
         _.each(object, function(value, key, scope){
 		padding = Math.max(padding, key.length);
 	});
+	// Set a max padding length
+	padding = Math.min(30, padding);
 	_.each(object, function(value, key, scope){
-                paddingObject[key] = padding - key.length + 1;
+		if(key.length > padding){ 
+			var newKey = key.substring(0,27) + "...";
+			object[newKey] = value;
+			delete object[key];
+
+			paddingObject[newKey] = padding - newKey.length;
+		}else paddingObject[key] = padding - key.length;
         });
-	return paddingObject;
+	return [paddingObject,object];
 }

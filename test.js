@@ -1,5 +1,6 @@
 var chai = require("chai");
-var herb = require("./herb");
+var herb = require("./herb").__super__;
+var inspect = require("util").inspect;
 
 var _ = require("lodash");
 
@@ -39,9 +40,9 @@ describe('Test Suite', function(){
 
 				var sampleFunction = function x(){};
 
-				args[0].should.equal(look.blue("{\n      \"test\": \"test\",\n      \"inner\": {\n          \"one\": true\n      },\n      \"array\": [\n          2,\n          3,\n          4\n      ]\n  }"));
+				args[0].should.equal(look.blue(inspect({test:'test', inner:{one:true}, array:[2,3,4]}, true, 4, true)));
 				
-				args[1].should.equal(look.blue("[\n      1,\n      2,\n      3\n  ]"));
+				args[1].should.equal("\u001b[049;34m[ \u001b[33m1\u001b[39m, \u001b[33m2\u001b[39m, \u001b[33m3\u001b[39m, [length]: \u001b[33m3\u001b[39m ]\u001b[0m");
 				args[2].should.equal(sampleFunction.toString());
 
 				done();
@@ -54,9 +55,9 @@ describe('Test Suite', function(){
 
 				args[0].should.equal(look.blue("test"));
 				args[1].should.equal(2.53);
-				args[2].should.equal(look.blue("[\n      53,\n      5,\n      5\n  ]"));
+				args[2].should.equal("\u001b[049;34m[ \u001b[33m53\u001b[39m, \u001b[33m5\u001b[39m, \u001b[33m5\u001b[39m, [length]: \u001b[33m3\u001b[39m ]\u001b[0m");
 				args[3].should.equal(look.blue("one"));
-				args[4].should.equal(look.blue("{\n      \"one\": true\n  }"));
+				args[4].should.equal(look.blue(inspect({one:true},true,4,true)));
 
 				done();
 			}, "test", 2.53, [53,5,5], "one", {one:true});
@@ -75,7 +76,7 @@ describe('Test Suite', function(){
 		
 		it('should display groups correctly', function(done){
 			herb.config({ verbose: 0 });
-			herb.group("New Group");
+			herb.this.group("New Group");
 			herb.parse(function(){
 				var args = _.toArray(arguments);
 
@@ -86,7 +87,7 @@ describe('Test Suite', function(){
 		})
 		
 		it('should display nested groups correctly', function(done){
-			herb.group("New Group 2");
+			herb.this.group("New Group 2");
 			herb.parse(function(){
 				var args = _.toArray(arguments);
 

@@ -2,8 +2,8 @@
 var _ = require('lodash');
 var culinary = require('culinary');
 // Source
-var parse = require('./parcers/arguments');
-var progress = require('./parcers/progress');
+var parse = require('./parsers/arguments');
+var progress = require('./parsers/progress');
 // Clean copy
 var native_console = console;
 
@@ -24,25 +24,26 @@ var buffers = {
 }
 
 var herb = {
-	_columns: function(){ return process.stdout.columns },
-	_rows: function(){ return process.stdout.rows },
+	__super__ : {
+		getSize: culinary.getSize,
+		culinary: culinary,
 
-	config: function(userConfig){
-		// Made verbose & verbosity attributes flexible
-		if((_.isNumber(userConfig.verbosity))&&(!userConfig.verbose)) userConfig.verbose = userConfig.verbosity;
-		
-	   _.defaults(userConfig, defaults);
-	   _.defaults(userConfig, config);
-	   config = userConfig;
+		parse: function(){
+                	parse.logType(config, buffers, arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
+                        	var callback = parsed.shift();
+                        	callback.apply(this, parsed);
+                	});
+        	},
+		config: function(userConfig){
+                // Made verbose & verbosity attributes flexible
+                	if((_.isNumber(userConfig.verbosity))&&(!userConfig.verbose)) userConfig.verbose = userConfig.verbosity;
+
+           		_.defaults(userConfig, defaults);
+           		_.defaults(userConfig, config);
+           		config = userConfig;
+        	},
 	},
-
-	parse: function(){
-		parse.logType(config, buffers, arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
-			var callback = parsed.shift();
-			callback.apply(this, parsed);
-                });
-	},
-
+	
 	info: function(){
 		parse.logType(config, buffers, arguments, { verbosity: 4, color: 'blue' }, function(parsed){
 			native_console.info.apply(this, parsed);
@@ -70,9 +71,7 @@ var herb = {
 	dir: function(){ native_console.dir.apply(this, arguments) },
 	assert: function(){ native_console.assert.apply(this, arguments) },
 
-	// Extended
-	culinary: culinary,
-	
+	// Extended	
 	clear: culinary.clearScreen,
 	clearLine: culinary.eraseLine,
 	writeLine: function(){
@@ -81,7 +80,11 @@ var herb = {
 			process.stdout.write(parsed[0]);
 		});
 	},
-	progress: progress,
+	center: function(){
+		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
+			native_console.log.apply(this, parsed);
+		})
+	},
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
 			native_console.log.apply(this, parsed);
@@ -98,5 +101,11 @@ var herb = {
 	   buffers.group.pop();
 	}
 }
+
+// Aliases
+	herb.config = herb.__super__.config;
+	// Makes all classes available for testing inside __super__ other than super itself
+	herb.__super__.this = _.omit(herb, '__super__');;
+//
 
 module.exports = herb;
