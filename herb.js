@@ -83,7 +83,20 @@ var herb = {
 	center: function(){
 		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
 			native_console.log.apply(this, parsed);
+			culinary.scrollDown();
 		})
+	},
+	right: function(){
+                parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, function(parsed){
+			native_console.log.apply(this, parsed);
+			culinary.scrollDown();
+                })
+        },
+	left: function(){
+		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, function(parsed){
+                        native_console.log.apply(this, parsed);
+                        culinary.scrollDown();
+                })	
 	},
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
