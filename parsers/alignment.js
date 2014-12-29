@@ -4,7 +4,7 @@ var utils = require("../lib/utils");
 var alignment = function(string, align) {
 	var width = process.stdout.columns;
 	var words = utils.breakWords(string);
-	var lines = [];
+	var lines = [""];
 	
 	_.each(words, function(word, key){
 		var currentLine = (!lines.length)?0:lines.length-1;
