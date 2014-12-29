@@ -7,9 +7,12 @@ var utils = require("../lib/utils");
 var group = require("./groups");
 var stringify = require("./objects").render;
 var alignment = require('./alignment');
+var count = require('./count');
+var time = require('./time');
 
 module.exports = {
 	logType: function(config, buffers, arguments, options, callback) {
+		console.log(this.marker);
 		// Unify arguments
 		arguments = _.toArray(arguments);
 
@@ -39,23 +42,11 @@ module.exports = {
 		else if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(roup.render(options.title, buffers.group.length));
 		
 		// Prepend time
-		var now = new Date();
-		now._f = "[" + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "] ";
-		if((!options.strict)&&(config.prependTime)) arguments.unshift(cook(now._f).spice("dim"));
+		if((!options.strict)&&(config.prependTime)) arguments.unshift(time(cook));
 		
 		callback(arguments);
 	},
 	count: function(config, buffers, label, options, callback) {
-		if(config.verbose < options.verbose) return null;
-		
-		// Specs: https://developer.mozilla.org/en-US/docs/Web/API/Console.count
-		if(!label) label = "";
-		if(!buffers.count[label]) buffers.count[label] = 1;
-		  else buffers.count[label]++;
-		
-		callback([
-			group.render(options.title, buffers.group.length),
-			cook(label + ' : ' + buffers.count[label]).spice(options.color)
-		]);
+		count(cook, config, buffers, label, options, callback);
 	}
 }

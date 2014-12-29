@@ -29,19 +29,33 @@ var herb = {
 		culinary: culinary,
 
 		parse: function(){
-                	parse.logType(config, buffers, arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
-                        	var callback = parsed.shift();
-                        	callback.apply(this, parsed);
-                	});
-        	},
+			parse.logType(config, buffers, arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
+					var callback = parsed.shift();
+					callback.apply(this, parsed);
+			});
+        },
+		
 		config: function(userConfig){
-                // Made verbose & verbosity attributes flexible
-                	if((_.isNumber(userConfig.verbosity))&&(!userConfig.verbose)) userConfig.verbose = userConfig.verbosity;
+			// Made verbose & verbosity attributes flexible
+				if((_.isNumber(userConfig.verbosity))&&(!userConfig.verbose)) userConfig.verbose = userConfig.verbosity;
 
-           		_.defaults(userConfig, defaults);
-           		_.defaults(userConfig, config);
-           		config = userConfig;
-        	},
+			_.defaults(userConfig, defaults);
+			_.defaults(userConfig, config);
+			config = userConfig;
+        },
+		
+		markerAttributes = {
+			background: undefined,
+			color: undefined,
+			style: undefined,
+		
+			verbosity: undefined
+		},
+		
+		// Marker allows for modification of each log
+		marker: function(attributes, isPermanent) {
+			_.defaults(this.__super__.markerAttributes, attributes);
+		}
 	},
 	
 	info: function(){
@@ -77,7 +91,9 @@ var herb = {
 	writeLine: function(){
 		culinary.cursorTo(0);
 		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
-			process.stdout.write(parsed[0]);
+			_.each(parsed, function(item){
+				process.stdout.write(item + "\n");
+			});
 		});
 	},
 	center: function(){
