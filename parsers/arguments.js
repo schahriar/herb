@@ -12,12 +12,22 @@ var time = require('./time');
 
 module.exports = {
 	logType: function(arguments, options, callback) {
-		console.log(this.marker);
-		var config = this.config;
-		var buffers = this.buffers;
+		var _this = this;
+
+		if(_this.__super__) _this = this.__super__;
+
+		var config = _this.getConfig();
+		var buffers = _this.getBuffers();
+		var spices = [];
+
 		// Unify arguments
 		arguments = _.toArray(arguments);
 
+		if(_this.markerAttributes.background) spices.push(_this.markerAttributes.background);
+		if(_this.markerAttributes.color)      spices.push(_this.markerAttributes.color);
+			else if(options.color) spices.push(options.color);
+		if(_this.markerAttributes.style)      spices.push(_this.markerAttributes.style);
+		
 		if((config.verbose < options.verbosity)&&(!options.strict)) return null;
 		if((config.verbose < options.verbosity)&&(options.strict)) return callback([arguments[0],undefined]);
 
@@ -30,9 +40,16 @@ module.exports = {
 				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
 			
 				if(_.isString(options.alignment)) argument = alignment(original, options.alignment);
-				argument = cook(argument).spice(options.color);
+				
+				argument = cook.apply({
+                                        string: argument
+                                }, spices);
 			}
-			if((_.isObject(argument))&&(!_.isFunction(argument))) argument = cook(stringify(argument,config.json)).spice(options.color);
+			if((_.isObject(argument))&&(!_.isFunction(argument))) {
+				argument = cook.apply({
+					string: stringify(argument,config.json)
+				}, spices);
+			}
 			if((_.isFunction(argument))&&(index!=0)) argument = argument.toString();
 			
 			arguments[index] = argument;
@@ -45,6 +62,8 @@ module.exports = {
 		
 		// Prepend time
 		if((!options.strict)&&(config.prependTime)) arguments.unshift(time(cook));
+		
+		if(!_this.markerAttributes.permanent) _this.marker('reset');
 		
 		callback(arguments);
 	},

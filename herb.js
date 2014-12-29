@@ -31,7 +31,7 @@ var herb = {
 		parse: function(){
 			parse.logType.apply(this, [arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
 				var callback = parsed.shift();
-				callback.apply(this, parsed);
+				callback.apply(this.__super__, parsed);
 			}]);
         },
 		
@@ -54,28 +54,39 @@ var herb = {
 		
 		// Marker allows for modification of each log
 		marker: function(attributes, isPermanent) {
-			_.defaults(this.__super__.markerAttributes, attributes);
-		}
+			if(isPermanent) attributes.permanent = true;
+			if(attributes === 'reset') this.markerAttributes = {
+				background: undefined,
+                        	color: undefined,
+                        	style: undefined,
+
+                        	verbosity: undefined
+			}; else _.defaults(this.__super__.markerAttributes, attributes);
+			return this;
+		},
+
+		getBuffers: function() { return buffers },
+		getConfig: function(){ return config }
 	},
 	
 	info: function(){
 		parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, function(parsed){
-			native_console.info.apply(this, parsed);
+			native_console.info.apply(this.__super__, parsed);
 		}]);
 	},
 	log: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 43 color: 'blue' }, function(parsed){
-			native_console.log.apply(this, parsed);
+		parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, function(parsed){
+			native_console.log.apply(this.__super__, parsed);
 		}])
 	},
 	warn: function(){
 		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'yellow' }, function(parsed){
-			native_console.warn.apply(this, parsed);
+			native_console.warn.apply(this.__super__, parsed);
 		}])
 	},
 	error: function(){
 		parse.logType.apply(this, [arguments, { verbosity: 1, color: 'red' }, function(parsed){
-			native_console.error.apply(this, parsed);
+			native_console.error.apply(this.__super__, parsed);
 		}])
 	},
 
@@ -90,26 +101,26 @@ var herb = {
 	clearLine: culinary.eraseLine,
 	writeLine: function(){
 		culinary.cursorTo(0);
-		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
+		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
 			_.each(parsed, function(item){
 				process.stdout.write(item + "\n");
 			});
 		}])
 	},
 	center: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
+		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
 		}]);
 	},
 	right: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, function(parsed){
+		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
 		}]);
 	},
 	left: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, function(parsed){
+		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
 		}]);	
@@ -121,7 +132,7 @@ var herb = {
 	},
 	group: function(label){
 		buffers.group.push('label');
-		parse.logType.apply(this, [[label], { verbosity: 2, color: 'bold', title: true }, function(parsed){
+		parse.logType.apply(this.__super__, [[label], { verbosity: 2, color: 'bold', title: true }, function(parsed){
 			native_console.log.apply(this, parsed);
 		}]);;
 	},
@@ -133,6 +144,7 @@ var herb = {
 
 // Aliases
 	herb.config = herb.__super__.config;
+	herb.marker = herb.__super__.marker;
 	// Makes all classes available for testing inside __super__ other than super itself
 	herb.__super__.this = _.omit(herb, '__super__');;
 //

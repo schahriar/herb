@@ -7,17 +7,19 @@ var alignment = function(string, align) {
 	var lines = [utils.char.empty];
 
 	// Go through words
-	_.each(words, function(word, index){
+	_.each(words, function(word, index, array){
 		var currentLine = (!lines.length)?0:lines.length-1;
 		var currentLength = (lines[currentLine])?lines[currentLine].length:0;
 			
 		if((currentLength + word.length) < width) {
 			// If current line has available space add words
-			lines[currentLine] = lines[currentLine] +  word + utils.char.space;
+			lines[currentLine] = lines[currentLine] + word + ((array.length-1 > index)?" ":"");
 		}
 		else {
+			// Fill the space
+			lines[currentLine] += utils.repeat(width - currentLength, utils.char.space);
 			// Otherwise move to the next line
-			lines.push(word + utils.char.space);
+			lines.push(word + " ");
 		}
 	})
 	// Go through lines
