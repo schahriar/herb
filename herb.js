@@ -29,10 +29,10 @@ var herb = {
 		culinary: culinary,
 
 		parse: function(){
-			parse.logType(config, buffers, arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
-					var callback = parsed.shift();
-					callback.apply(this, parsed);
-			});
+			parse.logType.apply(this, [arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
+				var callback = parsed.shift();
+				callback.apply(this, parsed);
+			}]);
         },
 		
 		config: function(userConfig){
@@ -59,24 +59,24 @@ var herb = {
 	},
 	
 	info: function(){
-		parse.logType(config, buffers, arguments, { verbosity: 4, color: 'blue' }, function(parsed){
+		parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, function(parsed){
 			native_console.info.apply(this, parsed);
-		});
+		}]);
 	},
 	log: function(){
-		parse.logType(config, buffers, arguments, { verbosity: 3, color: 'blue' }, function(parsed){
+		parse.logType.apply(this, [arguments, { verbosity: 43 color: 'blue' }, function(parsed){
 			native_console.log.apply(this, parsed);
-		});
+		}])
 	},
 	warn: function(){
-		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'yellow' }, function(parsed){
+		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'yellow' }, function(parsed){
 			native_console.warn.apply(this, parsed);
-		});
+		}])
 	},
 	error: function(){
-		parse.logType(config, buffers, arguments, { verbosity: 1, color: 'red' }, function(parsed){
+		parse.logType.apply(this, [arguments, { verbosity: 1, color: 'red' }, function(parsed){
 			native_console.error.apply(this, parsed);
-		});
+		}])
 	},
 
 	time: function(){ native_console.time.apply(this, arguments) },
@@ -90,29 +90,29 @@ var herb = {
 	clearLine: culinary.eraseLine,
 	writeLine: function(){
 		culinary.cursorTo(0);
-		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
+		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
 			_.each(parsed, function(item){
 				process.stdout.write(item + "\n");
 			});
-		});
+		}])
 	},
 	center: function(){
-		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
+		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
-		})
+		}]);
 	},
 	right: function(){
-                parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, function(parsed){
+		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
-                })
-        },
+		}]);
+	},
 	left: function(){
-		parse.logType(config, buffers, arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, function(parsed){
-                        native_console.log.apply(this, parsed);
-                        culinary.scrollDown();
-                })	
+		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, function(parsed){
+			native_console.log.apply(this, parsed);
+			culinary.scrollDown();
+		}]);	
 	},
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
@@ -121,9 +121,9 @@ var herb = {
 	},
 	group: function(label){
 		buffers.group.push('label');
-		parse.logType(config, buffers, [label], { verbosity: 2, color: 'bold', title: true }, function(parsed){
+		parse.logType.apply(this, [[label], { verbosity: 2, color: 'bold', title: true }, function(parsed){
 			native_console.log.apply(this, parsed);
-		});
+		}]);;
 	},
 	groupEnd: function(){
 	   // Remove last element from the array

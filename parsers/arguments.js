@@ -11,8 +11,10 @@ var count = require('./count');
 var time = require('./time');
 
 module.exports = {
-	logType: function(config, buffers, arguments, options, callback) {
+	logType: function(arguments, options, callback) {
 		console.log(this.marker);
+		var config = this.config;
+		var buffers = this.buffers;
 		// Unify arguments
 		arguments = _.toArray(arguments);
 
