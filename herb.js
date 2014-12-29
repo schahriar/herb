@@ -44,7 +44,7 @@ var herb = {
 			config = userConfig;
         },
 		
-		markerAttributes = {
+		markerAttributes: {
 			background: undefined,
 			color: undefined,
 			style: undefined,
