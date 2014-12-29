@@ -18,8 +18,8 @@ var alignment = function(string, align) {
 			// Otherwise wrap up the line to the alignment
 			var padding = (width - lines[currentLine].length);
 			if(padding > 0) {
-				if(align === "right") lines[currentLine] = utils.repeat(padding, utils.char.space) + lines[currentLine];
-				if(align === "center") lines[currentLine] = utils.repeat(padding/2, utils.char.space) + lines[currentLine];
+				if(align == "right") lines[currentLine] = utils.repeat(padding, utils.char.space) + lines[currentLine];
+				if(align == "center") lines[currentLine] = utils.repeat(padding/2, utils.char.space) + lines[currentLine];
 			}
 			// And move to the next line
 			lines.push(word + utils.char.space);

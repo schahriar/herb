@@ -22,10 +22,10 @@ module.exports = {
 			var original = argument;
 
 			if(_.isString(argument)) {
-				argument = cook(argument).spice(options.color);
 				argument = argument.replace(/\n/g, '\n' + group.render(options.title, buffers.group.length));
 			
 				if(_.isString(options.alignment)) argument = alignment(original, options.alignment);
+				argument = cook(argument).spice(options.color);
 			}
 			if((_.isObject(argument))&&(!_.isFunction(argument))) argument = cook(stringify(argument,config.json)).spice(options.color);
 			if((_.isFunction(argument))&&(index!=0)) argument = argument.toString();
