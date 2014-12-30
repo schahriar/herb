@@ -93,10 +93,15 @@ var herb = {
 	clearLine: culinary.eraseLine,
 	writeLine: function(){
 		culinary.cursorTo(0);
-		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan' }, function(raw, callback){
-			var parsed = raw.join(" ");
-			callback(parsed, process.stdout.write);
-		}])
+		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan' },
+			{
+				task: function(raw, callback){
+					var parsed = raw.join(" ");
+					callback(parsed, process.stdout.write);
+				},
+				description: "Joins all the arguments together"
+			}
+		])
 	},
 	center: function(){
 		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, native_console.log, function() {
