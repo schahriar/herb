@@ -71,7 +71,7 @@ module.exports = {
 			
 			return this;
 			
-		}) else {
+		}); else {
 			if(_.isObject(modifier)) modifier.apply(this, arguments);
 			if(_.isFunction(callback)) callback(arguments);
 			
