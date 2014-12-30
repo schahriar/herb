@@ -11,7 +11,7 @@ var count = require('./count');
 var time = require('./time');
 
 module.exports = {
-	logType: function(arguments, options, callback) {
+	logType: function(arguments, options, modifier, callback) {
 		var _this = this;
 
 		if(_this.__super__) _this = this.__super__;
@@ -65,7 +65,18 @@ module.exports = {
 		
 		if(!_this.markerAttributes.permanent) _this.marker('reset');
 		
-		callback(arguments);
+		if(_.isFunction(modifier)) modifier(arguments, function(arguments, modifier) {
+			modifier.apply(this, arguments);
+			if(_.isFunction(callback)) callback(arguments);
+			
+			return this;
+			
+		}) else {
+			if(_.isObject(modifier)) modifier.apply(this, arguments);
+			if(_.isFunction(callback)) callback(arguments);
+			
+			return this;
+		}
 	},
 	count: function(config, buffers, label, options, callback) {
 		count(cook, config, buffers, label, options, callback);

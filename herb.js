@@ -29,10 +29,9 @@ var herb = {
 		culinary: culinary,
 
 		parse: function(){
-			parse.logType.apply(this, [arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
+			return parse.logType.apply(this, [arguments, { verbosity: 0, color: 'blue', strict: true }, undefined, function(parsed){
 				var callback = parsed.shift();
 				callback.apply(this.__super__, parsed);
-				return this;
 			}]);
         },
 		
@@ -71,28 +70,16 @@ var herb = {
 	},
 	
 	info: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, function(parsed){
-			native_console.info.apply(this.__super__, parsed);
-			return this;
-		}]);
+		return parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, native_console.info]);
 	},
 	log: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, function(parsed){
-			native_console.log.apply(this.__super__, parsed);
-			return this;
-		}])
+		return parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, native_console.log]);
 	},
 	warn: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'yellow' }, function(parsed){
-			native_console.warn.apply(this.__super__, parsed);
-			return this;
-		}])
+		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'yellow' }, native_console.warn]);
 	},
 	error: function(){
-		parse.logType.apply(this, [arguments, { verbosity: 1, color: 'red' }, function(parsed){
-			native_console.error.apply(this.__super__, parsed);
-			return this;
-		}])
+		return parse.logType.apply(this, [arguments, { verbosity: 1, color: 'red' }, native_console.error]);
 	},
 
 	time: function(){ native_console.time.apply(this, arguments) },
@@ -106,46 +93,35 @@ var herb = {
 	clearLine: culinary.eraseLine,
 	writeLine: function(){
 		culinary.cursorTo(0);
-		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan' }, function(parsed){
-			_.each(parsed, function(item){
-				process.stdout.write(item + "\n");
-			});
-			return this;
+		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan' }, function(raw, callback){
+			var parsed = raw.join(" ");
+			callback(parsed, process.stdout.write);
 		}])
 	},
 	center: function(){
-		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
-			native_console.log.apply(this, parsed);
+		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, native_console.log, function() {
 			culinary.scrollDown();
-			return this;
-		}]);
+		}])
 	},
 	right: function(){
-		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, function(parsed){
-			native_console.log.apply(this, parsed);
+		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, native_console.log, function() {
 			culinary.scrollDown();
-			return this;
-		}]);
+		}])
 	},
 	left: function(){
-		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, function(parsed){
-			native_console.log.apply(this, parsed);
+		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, native_console.log, function() {
 			culinary.scrollDown();
-			return this;
-		}]);	
+		}])
 	},
 	count: function(label){
-		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
+		return parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			return this;
 		});
 	},
 	group: function(label){
 		buffers.group.push('label');
-		parse.logType.apply(this.__super__, [[label], { verbosity: 2, color: 'bold', title: true }, function(parsed){
-			native_console.log.apply(this, parsed);
-			return this;
-		}]);;
+		return parse.logType.apply(this, [[label], { verbosity: 2, style: 'bold', title: true }, native_console.log]);
 	},
 	groupEnd: function(){
 		// Remove last element from the array
