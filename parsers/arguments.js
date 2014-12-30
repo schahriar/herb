@@ -67,14 +67,14 @@ module.exports = {
 		
 		if(!_this.markerAttributes.permanent) _this.marker('reset');
 		
-		if(_.isObject(modifier)) modifier(arguments, function(arguments, modifier) {
+		if(_.isObject(modifier)) modifier.task(arguments, function(arguments, modifier) {
 			modifier.apply(this, arguments);
 			if(_.isFunction(callback)) callback(arguments);
 			
 			return this;
 			
 		}); else {
-			if(_.isObject(modifier)) modifier.apply(this, arguments);
+			if(_.isFunction(modifier)) modifier.apply(this, arguments);
 			if(_.isFunction(callback)) callback(arguments);
 			
 			return this;
