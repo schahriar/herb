@@ -73,7 +73,7 @@ var herb = {
 		return parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, native_console.info]);
 	},
 	log: function(){
-		return parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, native_console.log]);
+		return parse.logType.apply(this, [arguments, { verbosity: 3, color: 'blue' }, native_console.log]);
 	},
 	warn: function(){
 		return parse.logType.apply(this, [arguments, { verbosity: 2, color: 'yellow' }, native_console.warn]);

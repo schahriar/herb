@@ -11,17 +11,17 @@ var count = require('./count');
 var time = require('./time');
 
 module.exports = {
-	logType: function(arguments, options, modifier, callback) {
+	logType: function(args, options, modifier, callback) {
 		var _this = this;
-
+		
 		if(_this.__super__) _this = this.__super__;
-
+		
 		var config = _this.getConfig();
 		var buffers = _this.getBuffers();
 		var spices = [];
 
 		// Unify arguments
-		arguments = _.toArray(arguments);
+		arguments = _.toArray(args);
 
 		if(_this.markerAttributes.background) spices.push(_this.markerAttributes.background);
 			else if(options.background) spices.push(options.background);
@@ -30,7 +30,7 @@ module.exports = {
 		if(_this.markerAttributes.style)      spices.push(_this.markerAttributes.style);
 			else if(options.style) spices.push(options.style);
 		
-		if((config.verbose < options.verbosity)&&(!options.strict)) return null;
+		if((config.verbose < options.verbosity)&&(!options.strict)) return this;
 		if((config.verbose < options.verbosity)&&(options.strict)) return callback([arguments[0],undefined]);
 
 		if(!options.title) options.title = false;
@@ -67,13 +67,15 @@ module.exports = {
 		
 		if(!_this.markerAttributes.permanent) _this.marker('reset');
 		
-		if(_.isObject(modifier)) modifier.task(arguments, function(arguments, modifier) {
-			modifier.apply(this, arguments);
-			if(_.isFunction(callback)) callback(arguments);
+		if(!_.isFunction(modifier)) {
+			modifier.task(arguments, function(arguments, modifier) {
+				modifier.apply(this, arguments);
+				if(_.isFunction(callback)) callback(arguments);
 			
-			return this;
+				return this;
 			
-		}); else {
+			})
+		} else {
 			if(_.isFunction(modifier)) modifier.apply(this, arguments);
 			if(_.isFunction(callback)) callback(arguments);
 			
