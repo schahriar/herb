@@ -24,9 +24,11 @@ module.exports = {
 		arguments = _.toArray(arguments);
 
 		if(_this.markerAttributes.background) spices.push(_this.markerAttributes.background);
+			else if(options.background) spices.push(options.background);
 		if(_this.markerAttributes.color)      spices.push(_this.markerAttributes.color);
 			else if(options.color) spices.push(options.color);
 		if(_this.markerAttributes.style)      spices.push(_this.markerAttributes.style);
+			else if(options.style) spices.push(options.style);
 		
 		if((config.verbose < options.verbosity)&&(!options.strict)) return null;
 		if((config.verbose < options.verbosity)&&(options.strict)) return callback([arguments[0],undefined]);
