@@ -29,9 +29,11 @@ var herb = {
 		culinary: culinary,
 
 		parse: function(){
-			return parse.logType.apply(this, [arguments, { verbosity: 0, color: 'blue', strict: true }, undefined, function(parsed){
-				var callback = parsed.shift();
-				callback.apply(this.__super__, parsed);
+			// Unify arguments
+			arguments = _.toArray(arguments);
+			var callback = arguments.shift();
+			parse.logType.apply(this, [arguments, { verbosity: 0, color: 'blue', strict: true }, undefined, function(parsed){
+				callback.apply(this, arguments);
 			}]);
         },
 		
@@ -127,7 +129,7 @@ var herb = {
 	herb.config = herb.__super__.config;
 	herb.marker = herb.__super__.marker;
 	// Makes all classes available for testing inside __super__ other than super itself
-	herb.__super__.this = _.omit(herb, '__super__');;
+	herb.parse = herb.__super__.parse;
 //
 
 module.exports = herb;

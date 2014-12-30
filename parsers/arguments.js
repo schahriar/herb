@@ -11,7 +11,7 @@ var count = require('./count');
 var time = require('./time');
 
 module.exports = {
-	logType: function(args, options, modifier, callback) {
+	logType: function(arguments, options, modifier, callback) {
 		var _this = this;
 		
 		if(_this.__super__) _this = this.__super__;
@@ -21,7 +21,7 @@ module.exports = {
 		var spices = [];
 
 		// Unify arguments
-		arguments = _.toArray(args);
+		arguments = _.toArray(arguments);
 
 		if(_this.markerAttributes.background) spices.push(_this.markerAttributes.background);
 			else if(options.background) spices.push(options.background);
@@ -31,7 +31,7 @@ module.exports = {
 			else if(options.style) spices.push(options.style);
 		
 		if((config.verbose < options.verbosity)&&(!options.strict)) return this;
-		if((config.verbose < options.verbosity)&&(options.strict)) return callback([arguments[0],undefined]);
+		if((config.verbose < options.verbosity)&&(options.strict)) return callback.apply(this, []);
 
 		if(!options.title) options.title = false;
 		
@@ -60,7 +60,7 @@ module.exports = {
 		// If index 0 is function add group render to index 1
 		// Else add it to index 0
 		if((buffers.group.length)&&(options.strict)) arguments.splice(1, 0, group.render(options.title, buffers.group.length));
-		else if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(roup.render(options.title, buffers.group.length));
+		else if((buffers.group.length)&&(_.isArray(arguments))) arguments.unshift(group.render(options.title, buffers.group.length));
 		
 		// Prepend time
 		if((!options.strict)&&(config.prependTime)) arguments.unshift(time(cook));

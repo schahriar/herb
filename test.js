@@ -1,5 +1,5 @@
 var chai = require("chai");
-var herb = require("./herb").__super__;
+var herb = require("./herb");
 var inspect = require("util").inspect;
 
 var _ = require("lodash");
@@ -76,23 +76,23 @@ describe('Test Suite', function(){
 		
 		it('should display groups correctly', function(done){
 			herb.config({ verbose: 0 });
-			herb.this.group("New Group");
+			herb.group("New Group");
 			herb.parse(function(){
 				var args = _.toArray(arguments);
 
-				args[0].should.equal(look.bold("| ")); 
-				args[1].should.equal(look.blue("Group Item"));
+				args[1].should.equal(look.bold("| ")); 
+				args[0].should.equal(look.blue("Group Item"));
 				done();
 			}, "Group Item");
 		})
 		
 		it('should display nested groups correctly', function(done){
-			herb.this.group("New Group 2");
+			herb.group("New Group 2");
 			herb.parse(function(){
 				var args = _.toArray(arguments);
 
-				args[0].should.equal(look.bold("| | "));
-				args[1].should.equal(look.blue("Group Item"));
+				args[1].should.equal(look.bold("| | "));
+				args[0].should.equal(look.blue("Group Item"));
 				done();
 			}, "Group Item");
 		})
