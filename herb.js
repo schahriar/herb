@@ -32,6 +32,7 @@ var herb = {
 			parse.logType.apply(this, [arguments, { verbosity: 0, color: 'blue', strict: true }, function(parsed){
 				var callback = parsed.shift();
 				callback.apply(this.__super__, parsed);
+				return this;
 			}]);
         },
 		
@@ -72,21 +73,25 @@ var herb = {
 	info: function(){
 		parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, function(parsed){
 			native_console.info.apply(this.__super__, parsed);
+			return this;
 		}]);
 	},
 	log: function(){
 		parse.logType.apply(this, [arguments, { verbosity: 4, color: 'blue' }, function(parsed){
 			native_console.log.apply(this.__super__, parsed);
+			return this;
 		}])
 	},
 	warn: function(){
 		parse.logType.apply(this, [arguments, { verbosity: 2, color: 'yellow' }, function(parsed){
 			native_console.warn.apply(this.__super__, parsed);
+			return this;
 		}])
 	},
 	error: function(){
 		parse.logType.apply(this, [arguments, { verbosity: 1, color: 'red' }, function(parsed){
 			native_console.error.apply(this.__super__, parsed);
+			return this;
 		}])
 	},
 
@@ -105,40 +110,47 @@ var herb = {
 			_.each(parsed, function(item){
 				process.stdout.write(item + "\n");
 			});
+			return this;
 		}])
 	},
 	center: function(){
 		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'center' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
+			return this;
 		}]);
 	},
 	right: function(){
 		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'right' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
+			return this;
 		}]);
 	},
 	left: function(){
 		parse.logType.apply(this.__super__, [arguments, { verbosity: 2, color: 'cyan', alignment: 'left' }, function(parsed){
 			native_console.log.apply(this, parsed);
 			culinary.scrollDown();
+			return this;
 		}]);	
 	},
 	count: function(label){
 		parse.count(config, buffers, label, { color: 'blue' }, function(parsed){
 			native_console.log.apply(this, parsed);
+			return this;
 		});
 	},
 	group: function(label){
 		buffers.group.push('label');
 		parse.logType.apply(this.__super__, [[label], { verbosity: 2, color: 'bold', title: true }, function(parsed){
 			native_console.log.apply(this, parsed);
+			return this;
 		}]);;
 	},
 	groupEnd: function(){
-	   // Remove last element from the array
-	   buffers.group.pop();
+		// Remove last element from the array
+		buffers.group.pop();
+		return this;
 	}
 }
 
