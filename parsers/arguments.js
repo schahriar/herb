@@ -67,20 +67,10 @@ module.exports = {
 		
 		if(!_this.markerAttributes.permanent) _this.marker('reset');
 		
-		if(!_.isFunction(modifier)) {
-			modifier.task(arguments, function(arguments, modifier) {
-				modifier.apply(this, arguments);
-				if(_.isFunction(callback)) callback(arguments);
-			
-				return this;
-			
-			})
-		} else {
-			if(_.isFunction(modifier)) modifier.apply(this, arguments);
-			if(_.isFunction(callback)) callback(arguments);
-			
-			return this;
-		}
+		if(_.isFunction(modifier)) modifier.apply(this, arguments);
+		if(_.isFunction(callback)) callback(arguments);
+
+		return this;
 	},
 	count: function(config, buffers, label, options, callback) {
 		count(cook, config, buffers, label, options, callback);
