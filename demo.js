@@ -5,7 +5,7 @@ console.log("\n");
 herb.line('_');
 // Or combine multiple characters
 herb.marker({ color: 'magenta' }).line('<-->');
-/*
+
 herb.config({
 	logFile: './log',
 	prependTime: true
@@ -33,4 +33,4 @@ herb.table({
 	],
 	full: false
 });
-herb.paragraph("Anim magna velit ipsum id et dolor labore. Irure ipsum enim in laborum deserunt elit sit eu sit id et adipisicing eu do. Ad nulla ullamco excepteur consequat veniam ut. Tempor elit excepteur nulla pariatur irure nisi. Nostrud id cupidatat commodo non ex id nostrud amet pariatur.", { alignment: "center", color: "green", width: '50%', margin: '50%' });*/
+herb.paragraph("Anim magna velit ipsum id et dolor labore. Irure ipsum enim in laborum deserunt elit sit eu sit id et adipisicing eu do. Ad nulla ullamco excepteur consequat veniam ut. Tempor elit excepteur nulla pariatur irure nisi. Nostrud id cupidatat commodo non ex id nostrud amet pariatur.", { alignment: "center", color: "green", width: '50%', margin: '50%' });

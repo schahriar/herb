@@ -8,6 +8,7 @@ var empty = "", space = " ", comma = ",", column = ":", newLine = "\n";
 
 module.exports = {
 	render: function(object, options){
+		if(!options) options = new Object; // Last minute fix
 		var depth = options.depth || 4; // null for infinite
 		var showHidden = options.showHidden || true;
 		var hasColor = options.hasColor || true;
