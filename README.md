@@ -33,25 +33,89 @@ console.warn("An herb warning");
 console.count('label');
 ```
 
-### Basic progressbar
-You can add basic synchronous *progressbars* to your CLI now! A progressbar matches the width of the command-line screen and only takes an integer input. More advanced progressbars will arrive with version **2.0**
+## Methods
+**Info, Log, Warn, Error** (color:blue, blue, yellow, red, verbosity:4, 3, 2, 1) -> herb.log(log, json, ...)
+
+**Clear** "Clears console screen" -> herb.clear()
+
+**Count** "Counts to label" -> herb.count(label)
 ```javascript
-var herb = require('herb');
-
-// Creates a new progress bar with optional parameters
-var installProgress = new herb.progress({ title: "Installation progress:", bg: "cyan", fg: "yellow" });
-
-// "done" event is emitted when the progressbar reaches 100%
-installProgress.on('done', function(){
-  herb.log("We are at full capacity!");
-});
-
-// Set a time or do some async operations
-setTimeout(function(){ installProgress.set(50); /* Sets progressbar to 50% after 2 seconds */ }, 2000);
-setTimeout(function(){ installProgress.set(100); /* Sets progressbar to 100% after 4 seconds */ }, 4000);
-
+herb.count("Apples");
+herb.count("Apples");
+/// Output:
+// Apples : 1
+// Apples : 2
 ```
-**Current color options:** "black","white", "gray", "dim" ,"red","green","yellow","blue","magenta","cyan","reset"
+
+---------------
+**Group, GroupEnd** "Creates a group" -> herb.group(title)
+```javascript
+herb.group("Fruits");
+herb.log("Apples");
+herb.log("Oranges");
+herb.groupEnd();
+herb.warn("Group ended!");
+/// Output:
+// > Fruits
+// | Apples
+// | Oranges
+// Group ended!
+```
+---------------
+**Time, TimeEnd** "Measure time in ms" -> herb.time(label)
+```javascript
+herb.time("timeout");
+setTimeout(function() { herb.timeEnd("timeout") }, 1200);
+/// Output after 1200ms: (the output includes timeout computation time ~ 4ms to 12ms)
+// timeout: 1200ms
+```
+
+---------------
+
+**Humanify** "Output human friendly json" -> herb.humanify(json)
+```javascript
+herb.humanify({
+	"_id": "54a643971784e5031c7a34a2",
+	"index": 3,
+	"guid": "37f345d8-de55-46c2-9071-73d0b6982194",
+	"isActive": true,
+	"name": "Head Schneider"
+});
+/// Output:
+// _id:       54a643971784e5031c7a34a2
+// index:     3
+// guid:      37f345d8-de55-46c2-9071-73d0b6982194
+// isActive:  true
+// name:      Head Schneider
+```
+
+---------------
+
+**Paragraph** "Output a formatted paragraph" -> herb.paragraph(text)
+```javascript
+herb.paragraph("Anim magna velit ipsum id et dolor labore. Irure ipsum enim in laborum deserunt elit sit eu sit id et adipisicing eu do. Ad nulla ullamco excepteur consequat veniam ut. Tempor elit excepteur nulla pariatur irure nisi. Nostrud id cupidatat commodo non ex id nostrud amet pariatur.", { alignment: "center", color: "green", width: '50%', margin: '50%' });
+/// Outputs a green centered text with half width in the middle of the screen
+```
+
+---------------
+
+**Table** "Output a formatted table" -> herb.table({ headers: [...], rows: [[...],[...],...], borders: false })
+```javascript
+herb.table({
+	headers: ['id','name','email','last logged'],
+	rows: [
+		['1', 'Lorem ipsum', 'lorem@example.com', 'January 1st 2015'],
+		['2', '', '', ''],
+		['3', 'John Doe', 'info@example.com', 'November 5th 2014']
+	],
+	borders: false // Full is a table style
+});
+/// Outputs a green centered text with half width in the middle of the screen
+```
+
+---------------
+**herb** covers all current console functions and a lot more.
+[To prevent TLTR we have moved methods here.](./tutorials/methods.md)
 
 ## Config
 ```javascript
@@ -73,10 +137,6 @@ herb.config({
   prependTime: false // Prepends time [hour:minute:seconds] to every log if enabled
 })
 ```
-
-## Methods
-**herb** covers all current console functions and a lot more.
-[To prevent TLTR we have moved methods here.](./tutorials/methods.md)
 
 ## Test Suite
 You can do a complex yet boring test by running the following in the source directory:
