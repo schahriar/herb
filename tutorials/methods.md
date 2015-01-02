@@ -9,13 +9,15 @@ herb.config({ verbose: 4 }).info("Some nice information that would display when 
 herb.warn("Some warning that displays").config({ verbose: 1 }).error("Switch to errors only mode");
 herb.warn("You won't see this");
 ```
-
+![basic](./images/basic.png)
 ---------------
+
 **Clear** "Clears console screen" -> herb.clear()
 
 ---------------
 
 **ClearLine** "Clears last line for writing" -> herb.clearLine()
+
 ---------------
 
 **Count** "Counts to label" -> herb.count(label)
@@ -24,7 +26,7 @@ for(i=0; i<10; i++) {
 	herb.count("Apples");
 }
 ```
-
+![count](./images/count.png)
 ---------------
 **Group, GroupEnd** "Creates a group" -> herb.group(title)
 ```javascript
@@ -34,13 +36,14 @@ herb.log("Oranges");
 herb.groupEnd();
 herb.warn("Group ended!");
 ```
+![group](./images/group.png)
 ---------------
 **Time, TimeEnd** "Measure time in ms" -> herb.time(label)
 ```javascript
 herb.time("timeout");
 setTimeout(function() { herb.timeEnd("timeout") }, 1200);
 ```
-
+![time](./images/time.png)
 ---------------
 
 **Humanify** "Output human friendly json" -> herb.humanify(json)
@@ -53,7 +56,7 @@ herb.humanify({
 	"name": "Head Schneider"
 });
 ```
-
+![humanify](./images/humanify.png)
 ---------------
 
 **Paragraph** "Output a formatted paragraph" -> herb.paragraph(text)
@@ -65,7 +68,7 @@ herb.paragraph("Anim magna velit ipsum id et dolor labore."
 { alignment: "center", color: "green", width: '50%', margin: '50%' });
 /// Outputs a green centered text with half width in the middle of the screen
 ```
-
+![paragraph](./images/paragraph.png)
 ---------------
 
 **Table** "Output a formatted table" -> herb.table({ headers: [...], rows: [[...],[...],...], borders: false })
@@ -80,7 +83,7 @@ herb.table({
 	borders: false // Full is a table style
 });
 ```
-
+![table](./images/table.png)
 ---------------
 
 **Line** "Output a divider" -> herb.line('_')
@@ -90,3 +93,4 @@ herb.line('_');
 herb.marker({ color: 'magenta' }).line('<-->');
 ```
 ---------------
+![line](./images/line.png)
