@@ -1,7 +1,7 @@
 {
   "name": "herb",
-  "version": "1.3.7",
-  "description": "The CLI Monster!",
+  "version": "2.1.0",
+  "description": "The Logging Monster!",
   "main": "herb.js",
   "scripts": {
     "test": "mocha"
@@ -13,12 +13,15 @@
   "keywords": [
     "herb",
     "console",
+	"log",
     "logs",
     "logging",
+	"table",
+	"paragraph",
+	"line",
     "CLI",
     "color",
-    "styling",
-    "progressbar"
+    "styling"
   ],
   "author": "Schahriar SaffarShargh <info@schahriar.com> (http://schahriar.com/)",
   "license": "MIT",
