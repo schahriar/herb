@@ -22,13 +22,13 @@ var herb = {
 	/// ------- ///
 
 	// Extended
-	clear: culinary.clearScreen,
-	clearLine: culinary.eraseLine,
+	clear: function() { culinary.clearScreen(); return this },
+	clearLine: function() { culinary.up(1).eraseLine(); return this },
 	
-	line: function(){ return parse.apply(this, ['line', arguments, null, native_console.log]) },
-	table: function(){ return parse.apply(this, ['table', arguments, null, native_console.log]) },
+	line: function(){ return parse.apply(this, ['line', arguments, { verbosity: 1 }, native_console.log]) },
+	table: function(){ return parse.apply(this, ['table', arguments, { verbosity: 1 }, native_console.log]) },
 	
-	paragraph: function(){ return parse.apply(this, ['log', arguments, { paragraph: true }, native_console.log, culinary.scrollDown]) },
+	paragraph: function(){ return parse.apply(this, ['log', arguments, { paragraph: true, verbosity: 1 }, native_console.log, culinary.scrollDown]) },
 	
 	count: function(label){ return parse.apply(this, ['count', [label], { color: 'blue' }, native_console.log]) },
 	group: function(label){
