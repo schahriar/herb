@@ -17,8 +17,8 @@ var herb = {
 	humanify: function(){ return parse.apply(this, ['json', arguments, { verbosity: 3 },                  native_console.log])   },
 
 	//-  Timers  -//
-	time: function(label){ return parse.apply(this, ['time', [label]]) },
-	timeEnd: function(label){ return parse.apply(this, ['timeEnd', [label], { color: 'green' }, native_console.log]) },
+	time: function(label){ return parse.apply(this, ['time', [label], { verbosity: 0 }]) },
+	timeEnd: function(label){ return parse.apply(this, ['timeEnd', [label], { color: 'green', verbosity: 0 }, native_console.log]) },
 	/// ------- ///
 
 	// Extended
@@ -28,12 +28,12 @@ var herb = {
 	line: function(){ return parse.apply(this, ['line', arguments, { verbosity: 1 }, native_console.log]) },
 	table: function(){ return parse.apply(this, ['table', arguments, { verbosity: 1 }, native_console.log]) },
 	
-	paragraph: function(){ return parse.apply(this, ['log', arguments, { paragraph: true, verbosity: 1 }, native_console.log, culinary.scrollDown]) },
+	paragraph: function(){ return parse.apply(this, ['log', arguments, { paragraph: true, verbosity: 3 }, native_console.log, culinary.scrollDown]) },
 	
-	count: function(label){ return parse.apply(this, ['count', [label], { color: 'blue' }, native_console.log]) },
+	count: function(label){ return parse.apply(this, ['count', [label], { color: 'blue', verbosity: 3 }, native_console.log]) },
 	group: function(label){
 		__super__.buffers.group.push('label');
-		return parse.apply(this, ['log', [label], { verbosity: 2, style: 'bold', title: true }, native_console.log]);
+		return parse.apply(this, ['log', [label], { verbosity: 1, style: 'bold', title: true }, native_console.log]);
 	},
 	groupEnd: function(){
 		// Remove last element from the array

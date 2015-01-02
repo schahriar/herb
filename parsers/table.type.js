@@ -47,7 +47,7 @@ module.exports = function(arguments) {
 		table.rows = arguments[0].rows;
 		table.widths = arguments[0].widths;
 		table.align = arguments[0].align;
-		if(arguments[0].full) table.chars = {
+		if(arguments[0].borders) table.chars = {
 			  'top': '─'
 			, 'top-mid': '┬'
 			, 'top-left': '┌'

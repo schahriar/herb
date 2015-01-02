@@ -11,6 +11,6 @@ module.exports = {
 		for(i=i; i<length; i++){ cString += template }
 		if(isTitle) cString += "> ";
 		
-		return cook(cString).spice("bold");
+		return cook(cString).spice("bold", "dim");
 	}
 }

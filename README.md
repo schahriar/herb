@@ -95,8 +95,8 @@ herb.humanify({
 
 **Paragraph** "Output a formatted paragraph" -> herb.paragraph(text)
 ```javascript
-herb.paragraph("Anim magna velit ipsum id et dolor labore.
-+ "Irure ipsum enim in laborum deserunt elit sit eu sit id
+herb.paragraph("Anim magna velit ipsum id et dolor labore."
++ "Irure ipsum enim in laborum deserunt elit sit eu sit id"
 + "et adipisicing eu do. Ad nulla ullamco excepteur consequat"
 + "veniam ut. Tempor elit excepteur nulla pariatur irure nisi.",
 { alignment: "center", color: "green", width: '50%', margin: '50%' });
