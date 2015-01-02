@@ -1,5 +1,5 @@
 var _ = require("lodash");
-var utils = require("../lib/utils");
+var utils = require("../../lib/utils");
 var inspector = require("util").inspect;
 var cook = require("culinary").style;
 
@@ -14,9 +14,14 @@ module.exports = {
 		
 		return inspector(object, showHidden, depth, hasColor);
 	},
-	prettyPlease: function(object){
-		var product = new humanify(object);
-		return product.scan()+newLine;
+	json: function(objects){
+		var product = [];
+		_.forEach(objects, function(object, key, scope){
+			var current = new humanify(object);
+			product.push(current.scan()+newLine);
+		});
+		
+		return product;
 	}
 }
 

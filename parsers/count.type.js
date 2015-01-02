@@ -1,13 +1,21 @@
-module.exports = function(cook, config, buffers, label, options, callback){
-	if(config.verbose < options.verbose) return null;
+// Modules
+var cook = require('culinary').style;
+// Source
+var group = require("./string/groups");
+
+module.exports = function(label, options){
+	
+	var config = this.config;
+	var buffers = this.buffers;
 		
 	// Specs: https://developer.mozilla.org/en-US/docs/Web/API/Console.count
 	if(!label) label = "";
 	if(!buffers.count[label]) buffers.count[label] = 1;
 	  else buffers.count[label]++;
 
-	callback([
+	
+	return [
 		group.render(options.title, buffers.group.length),
 		cook(label + ' : ' + buffers.count[label]).spice(options.color)
-	]);
+	];
 }

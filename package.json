@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/schahriar/herb",
   "dependencies": {
+    "cli-table": "^0.3.1",
     "culinary": "^1.1.0",
     "lodash": "^2.4.1"
   },
