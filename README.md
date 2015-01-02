@@ -1,9 +1,9 @@
 ![Herbal Logo](logo.png)
 
-Add some true flavour to your **NodeJS** console now with progressbars!
+Add some true flavour to your **NodeJS** console!
 ======
 
-**herb** is a magical layer for the most complex of all *verbosities*. To put it in simple words it enables advanced functions missing in the current Node logging system (console.log). **You can group, count, and add progressbars & soon tables** all in *color!* and the best part about it is the fact that you can just replace the global ***console*** with **herb** without further modifications.
+**herb** is a magical layer for the most complex *logs*. To put it in simple words it enables advanced functions missing in the current Node logging system (console.log). **You can group, count, and add lines, paragraphs or tables** all in *color!* and the best part about it is the fact that you can just replace the global ***console*** with **herb** without further modifications!
 
 ## Installation
 ```javascript
@@ -37,6 +37,8 @@ console.count('label');
 **Info, Log, Warn, Error** (color:blue, blue, yellow, red, verbosity:4, 3, 2, 1) -> herb.log(log, json, ...)
 
 **Clear** "Clears console screen" -> herb.clear()
+
+**ClearLine** "Clears last line for writing" -> herb.clearLine()
 
 **Count** "Counts to label" -> herb.count(label)
 ```javascript
@@ -93,7 +95,11 @@ herb.humanify({
 
 **Paragraph** "Output a formatted paragraph" -> herb.paragraph(text)
 ```javascript
-herb.paragraph("Anim magna velit ipsum id et dolor labore. Irure ipsum enim in laborum deserunt elit sit eu sit id et adipisicing eu do. Ad nulla ullamco excepteur consequat veniam ut. Tempor elit excepteur nulla pariatur irure nisi. Nostrud id cupidatat commodo non ex id nostrud amet pariatur.", { alignment: "center", color: "green", width: '50%', margin: '50%' });
+herb.paragraph("Anim magna velit ipsum id et dolor labore.
++ "Irure ipsum enim in laborum deserunt elit sit eu sit id
++ "et adipisicing eu do. Ad nulla ullamco excepteur consequat"
++ "veniam ut. Tempor elit excepteur nulla pariatur irure nisi.",
+{ alignment: "center", color: "green", width: '50%', margin: '50%' });
 /// Outputs a green centered text with half width in the middle of the screen
 ```
 
@@ -114,28 +120,49 @@ herb.table({
 ```
 
 ---------------
-**herb** covers all current console functions and a lot more.
-[To prevent TLTR we have moved methods here.](./tutorials/methods.md)
 
-## Config
+**Line** "Output a divider" -> herb.line('_')
+```javascript
+herb.line('_');
+// Or combine multiple characters
+herb.line('<-->');
+/// Outputs two full width (console width) lines e.g.:
+// _________________________
+// <--><--><--><--><--><--><-
+```
+---------------
+
+[You can check out pictures of these methods here.](./tutorials/methods.md)
+
+## Config & LogFile
 ```javascript
 var herb = require('herb');
 
 // Config is dynamic
 // You can modify config at any point
 herb.config({
-  // JSON prettify configs (json)
-  json: {
-    indent: 4,
-    offset: 2 
-  },
-
   // Verbosity of logs (integer)
   // Note that higher numbers cover the entire group e.g. 3 = ['Log','Warn','Error']
   verbose: 3, // 4: Info, 3: Log, 2: Warn, 1: Error, 0: Fatal
 
   prependTime: false // Prepends time [hour:minute:seconds] to every log if enabled
+  logFile: undefined // Can be set to a file e.g. "./log" & logs every log within the verbosity into the file
 })
+```
+Log files can be read using a simple code:
+```javascript
+var fs = require('fs');
+console.log(fs.readFileSync('./log', {encoding: 'utf8'}));
+```
+
+## Marker
+You can modify **background**, **color** and **style** of every output using marker. If { permanent: boolean } is set to true then the marker will override every output otherwise it will be cleared after each output.
+```javascript
+var herb = require('herb');
+
+herb.marker({ color: 'green' }).log('A success story!');
+// A Magenta line
+herb.marker({ color: 'magenta' }).line('-');
 ```
 
 ## Test Suite
