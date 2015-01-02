@@ -48,7 +48,6 @@ herb.count("Apples");
 // Apples : 1
 // Apples : 2
 ```
-
 ---------------
 **Group, GroupEnd** "Creates a group" -> herb.group(title)
 ```javascript
@@ -71,7 +70,6 @@ setTimeout(function() { herb.timeEnd("timeout") }, 1200);
 /// Output after 1200ms: (the output includes timeout computation time ~ 4ms to 12ms)
 // timeout: 1200ms
 ```
-
 ---------------
 
 **Humanify** "Output human friendly json" -> herb.humanify(json)
@@ -90,7 +88,6 @@ herb.humanify({
 // isActive:  true
 // name:      Head Schneider
 ```
-
 ---------------
 
 **Paragraph** "Output a formatted paragraph" -> herb.paragraph(text)
@@ -102,7 +99,6 @@ herb.paragraph("Anim magna velit ipsum id et dolor labore."
 { alignment: "center", color: "green", width: '50%', margin: '50%' });
 /// Outputs a green centered text with half width in the middle of the screen
 ```
-
 ---------------
 
 **Table** "Output a formatted table" -> herb.table({ headers: [...], rows: [[...],[...],...], borders: false })
@@ -118,7 +114,6 @@ herb.table({
 });
 /// Outputs a green centered text with half width in the middle of the screen
 ```
-
 ---------------
 
 **Line** "Output a divider" -> herb.line('_')
@@ -131,8 +126,8 @@ herb.line('<-->');
 // <--><--><--><--><--><--><-
 ```
 ---------------
-
 [You can check out pictures of these methods here.](./tutorials/methods.md)
+
 
 ## Config & LogFile
 ```javascript
@@ -145,8 +140,10 @@ herb.config({
   // Note that higher numbers cover the entire group e.g. 3 = ['Log','Warn','Error']
   verbose: 3, // 4: Info, 3: Log, 2: Warn, 1: Error, 0: Fatal
 
-  prependTime: false // Prepends time [hour:minute:seconds] to every log if enabled
-  logFile: undefined // Can be set to a file e.g. "./log" & logs every log within the verbosity into the file
+  prependTime: false, // Prepends time [hour:minute:seconds] to every log if enabled
+  
+  // Can be set to a file e.g. "./log" & logs every log within the verbosity into the file
+  logFile: undefined
 })
 ```
 Log files can be read using a simple code:
