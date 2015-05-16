@@ -55,7 +55,7 @@ var herb = {
 			options.forEach(function(item, index){
 				if(index == 0) return false;
 				try {
-					if(args[index-1] !== undefined)
+					if(args[index-1])
 						array.push(herb[item](args[index-1]));
 					else
 						array.push(' ')
@@ -72,6 +72,9 @@ styles.forEach(function(spice, name){
 	herb[spice] = function(string){
 		if(!string) return false;
 		if((string.constructor === Object) || string.constructor === Array) string = JSON.stringify(string);
+		if(string.length < 1) string = '';
+		if(string === null) string = 'null';
+		
 		return culinary.style(string).spice(spice)
 	}
 })

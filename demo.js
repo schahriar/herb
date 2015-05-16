@@ -1,6 +1,6 @@
 var herb = require("./herb");
 
-var log = herb.template('log', 'green', 'white', 'blue');
+var log = herb.template('log', 'green', 'white', 'red', 'blue');
 
 var fs = require('fs');
 //console.log(fs.readFileSync('./log', {encoding: 'utf8'}));
@@ -37,7 +37,7 @@ herb.table({
 	full: false
 });
 
-log('test', '2', '3', '4')
+log('test', {}, 'null', 'more')
 
 herb.paragraph("Anim magna velit ipsum id et dolor labore. Irure ipsum enim in laborum deserunt elit sit eu sit id et adipisicing eu do. Ad nulla ullamco excepteur consequat veniam ut. Tempor elit excepteur nulla pariatur irure nisi. Nostrud id cupidatat commodo non ex id nostrud amet pariatur.", { alignment: "center", color: "green", width: '50%', margin: '50%' });
 herb.log(herb.green('SUCCESS'), herb.underline('www.example.com'))
