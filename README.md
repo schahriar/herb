@@ -46,6 +46,12 @@ herb.log(herb.green('SUCCESS'), herb.underline('www.example.com'))
 ## Methods
 **Info, Log, Warn, Error** (color:blue, blue, yellow, red, verbosity:4, 3, 2, 1) -> herb.log(log, json, ...)
 
+**Template** "Allows for color templating" -> herb.template(type, color1, color2, style3, ...)
+```javascript
+var header = herb.template('log', 'green', 'white', 'green');
+header('This will be green', 'white here', '& back to green again', 'this will be ignored');
+```
+
 **Clear** "Clears console screen" -> herb.clear()
 
 **ClearLine** "Clears last line for writing" -> herb.clearLine()

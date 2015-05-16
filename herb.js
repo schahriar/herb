@@ -46,13 +46,31 @@ var herb = {
 	dir: function(){ native_console.dir.apply(this, arguments) },
 	assert: function(){ native_console.assert.apply(this, arguments) },
 	/// --------- ///
+
+	template: function(type){
+		var options = Array.prototype.slice.call(arguments);
+		return function(){
+			var array = [];
+			var args = Array.prototype.slice.call(arguments);
+			options.forEach(function(item, index){
+				if(index == 0) return false;
+				try {
+					array.push(herb[item](args[index-1]));
+				}catch(e){}
+			})
+			console.log(array)
+			herb[type].apply(herb, array);
+		}
+	}
 }
 
 var styles = ['black','red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'dim', 'bold', 'invert', 'italic', 'underline', 'strikethrough', 'hidden', 'bgBlack', 'bgWhite', 'bgGreen', 'bgBlue', 'bgCyan', 'bgMagenta', 'bgRed', 'bgYellow'];
 
 styles.forEach(function(spice, name){
-	herb[spice] = function(){
-		return culinary.style(Array.prototype.slice.call(arguments).join(' ')).spice(spice)
+	herb[spice] = function(string){
+		if(!string) return false;
+		if((string.constructor === Object) || string.constructor === Array) string = JSON.stringify(string);
+		return culinary.style(string).spice(spice)
 	}
 })
 
