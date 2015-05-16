@@ -8,12 +8,12 @@ var native_console = console;
 
 var herb = {
 	__super__ : __super__,
-	
+
 	info:     function(){ return parse.apply(this, ['log',  arguments, { verbosity: 4, color: 'blue' },   native_console.info])  },
 	log:      function(){ return parse.apply(this, ['log',  arguments, { verbosity: 3, color: 'blue' },   native_console.log])   },
 	warn:     function(){ return parse.apply(this, ['log',  arguments, { verbosity: 2, color: 'yellow' }, native_console.warn])  },
 	error:    function(){ return parse.apply(this, ['log',  arguments, { verbosity: 1, color: 'red' },    native_console.error]) },
-	
+
 	humanify: function(){ return parse.apply(this, ['json', arguments, { verbosity: 3 },                  native_console.log])   },
 
 	//-  Timers  -//
@@ -24,12 +24,12 @@ var herb = {
 	// Extended
 	clear: function() { culinary.clearScreen(); return this },
 	clearLine: function() { culinary.up(1).eraseLine(); return this },
-	
+
 	line: function(){ return parse.apply(this, ['line', arguments, { verbosity: 1 }, native_console.log]) },
 	table: function(){ return parse.apply(this, ['table', arguments, { verbosity: 1 }, native_console.log]) },
-	
+
 	paragraph: function(){ return parse.apply(this, ['log', arguments, { paragraph: true, verbosity: 3 }, native_console.log, culinary.scrollDown]) },
-	
+
 	count: function(label){ return parse.apply(this, ['count', [label], { color: 'blue', verbosity: 3 }, native_console.log]) },
 	group: function(label){
 		__super__.buffers.group.push('label');
@@ -40,13 +40,21 @@ var herb = {
 		__super__.buffers.group.pop();
 		return this;
 	},
-	
+
 	//-  Defaults  -//
 	trace: function(){ native_console.trace.apply(this, arguments) },
 	dir: function(){ native_console.dir.apply(this, arguments) },
 	assert: function(){ native_console.assert.apply(this, arguments) },
 	/// --------- ///
 }
+
+var styles = ['black','red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'dim', 'bold', 'invert', 'italic', 'underline', 'strikethrough', 'hidden', 'bgBlack', 'bgWhite', 'bgGreen', 'bgBlue', 'bgCyan', 'bgMagenta', 'bgRed', 'bgYellow'];
+
+styles.forEach(function(spice, name){
+	herb[spice] = function(){
+		return culinary.style(Array.prototype.slice.call(arguments).join(' ')).spice(spice)
+	}
+})
 
 // Aliases
 	herb.getSize = culinary.getSize

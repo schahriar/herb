@@ -22,15 +22,16 @@ herb.humanify({
 herb.marker({ color: 'magenta' }).line('-');
 herb.log({ this: "A LARGE TEST!" });
 herb.clearLine().log("ONE MORE!");
-herb.error("Big Time FUCK UP!");
+herb.error("Big ERROR!");
 herb.marker({ color: 'magenta' }).line('<-->');
 herb.table({
 	headers: ['id','name','email','last logged'],
 	rows: [
 		['1', 'Schahriar SFR', 'info@schahriar.com', 'January 1st 2015'],
 		['2'],
-		['3', 'Hamid SaffarShargh', 'info@ocecan.com', 'November 5th 2014']
+		['3', 'TEST USER', 'test@example.com', 'November 5th 2014']
 	],
 	full: false
 });
 herb.paragraph("Anim magna velit ipsum id et dolor labore. Irure ipsum enim in laborum deserunt elit sit eu sit id et adipisicing eu do. Ad nulla ullamco excepteur consequat veniam ut. Tempor elit excepteur nulla pariatur irure nisi. Nostrud id cupidatat commodo non ex id nostrud amet pariatur.", { alignment: "center", color: "green", width: '50%', margin: '50%' });
+herb.log(herb.green('SUCCESS'), herb.underline('www.example.com'))

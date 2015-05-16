@@ -33,6 +33,16 @@ console.warn("An herb warning");
 console.count('label');
 ```
 
+## Colors & Styles
+All [Culinary](https://www.npmjs.com/package/culinary) styles and colors are supported!
+e.g.
+```
+herb.log(herb.green('SUCCESS'), herb.underline('www.example.com'))
+```
+- **Colors:** Black, White, Green, Blue, Cyan, Magenta, Red, Yellow
+- **Backgrounds:** bgBlack, bgWhite, bgGreen, bgBlue, bgCyan, bgMagenta, bgRed, bgYellow
+- **Spices:** bold, underline, ~~strikethrough~~ *(barely supported by clients)*, italic, **hidden**, invert, reset
+
 ## Methods
 **Info, Log, Warn, Error** (color:blue, blue, yellow, red, verbosity:4, 3, 2, 1) -> herb.log(log, json, ...)
 
@@ -141,7 +151,7 @@ herb.config({
   verbose: 3, // 4: Info, 3: Log, 2: Warn, 1: Error, 0: Fatal
 
   prependTime: false, // Prepends time [hour:minute:seconds] to every log if enabled
-  
+
   // Can be set to a file e.g. "./log" & logs every log within the verbosity into the file
   logFile: undefined
 })
