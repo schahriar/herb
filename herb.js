@@ -55,10 +55,12 @@ var herb = {
 			options.forEach(function(item, index){
 				if(index == 0) return false;
 				try {
-					array.push(herb[item](args[index-1]));
+					if(args[index-1] !== undefined)
+						array.push(herb[item](args[index-1]));
+					else
+						array.push(' ')
 				}catch(e){}
 			})
-			console.log(array)
 			herb[type].apply(herb, array);
 		}
 	}
