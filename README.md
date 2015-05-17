@@ -46,6 +46,8 @@ herb.log(herb.green('SUCCESS'), herb.underline('www.example.com'))
 ## Methods
 **Info, Log, Warn, Error** (color:blue, blue, yellow, red, verbosity:4, 3, 2, 1) -> herb.log(log, json, ...)
 
+**Write** "Writes logs through process.stdout rather than console.log but retains similar behavior" -> herb.write(log1, log2, ...)
+
 **Template** "Allows for color templating" -> herb.template(type, color1, color2, style3, ...)
 ```javascript
 var header = herb.template('log', 'green', 'white', 'green');

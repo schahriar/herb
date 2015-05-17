@@ -1,4 +1,5 @@
 // Modules
+var _ = require("lodash");
 var culinary = require('culinary');
 // Source
 var __super__ = require('./lib/super');
@@ -13,6 +14,10 @@ var herb = {
 	log:      function(){ return parse.apply(this, ['log',  arguments, { verbosity: 3, color: 'blue' },   native_console.log])   },
 	warn:     function(){ return parse.apply(this, ['log',  arguments, { verbosity: 2, color: 'yellow' }, native_console.warn])  },
 	error:    function(){ return parse.apply(this, ['log',  arguments, { verbosity: 1, color: 'red' },    native_console.error]) },
+
+	write: function(){ return parse.apply(this, ['log',  arguments, { verbosity: 1, color: 'red' },    function(){
+		culinary.eraseLine().write(_.toArray(arguments).join(' ') + '\n');
+	}]) },
 
 	humanify: function(){ return parse.apply(this, ['json', arguments, { verbosity: 3 },                  native_console.log])   },
 
@@ -74,7 +79,7 @@ styles.forEach(function(spice, name){
 		if((string.constructor === Object) || string.constructor === Array) string = JSON.stringify(string);
 		if(string.length < 1) string = '';
 		if(string === null) string = 'null';
-		
+
 		return culinary.style(string).spice(spice)
 	}
 })

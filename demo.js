@@ -1,6 +1,6 @@
 var herb = require("./herb");
 
-var log = herb.template('log', 'blue', 'white', 'dim', 'bold')
+var log = herb.template('write', 'blue', 'white', 'dim', 'bold')
 
 var fs = require('fs');
 //console.log(fs.readFileSync('./log', {encoding: 'utf8'}));
