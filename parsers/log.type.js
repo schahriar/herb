@@ -14,7 +14,7 @@ module.exports = function(arguments, options) {
 	var config = _this.config;
 	var buffers = _this.buffers;
 	var spices = [];
-	
+
 	if((options.paragraph)&&(_.isObject(arguments[arguments.length-1]))) _.defaults(options, arguments.pop());
 
 	if(_this.markerAttributes.background) spices.push(_this.markerAttributes.background);

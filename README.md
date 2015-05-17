@@ -159,7 +159,10 @@ herb.config({
   prependTime: false, // Prepends time [hour:minute:seconds] to every log if enabled
 
   // Can be set to a file e.g. "./log" & logs every log within the verbosity into the file
-  logFile: undefined
+  logFile: undefined,
+
+  // Add a prefix to all output
+  prefix: undefined
 })
 ```
 Log files can be read using a simple code:

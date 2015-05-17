@@ -1,6 +1,6 @@
 var herb = require("./herb");
 
-var log = herb.template('log', 'green', 'white', 'red', 'blue');
+var log = herb.template('log', 'blue', 'white', 'dim', 'bold')
 
 var fs = require('fs');
 //console.log(fs.readFileSync('./log', {encoding: 'utf8'}));
@@ -11,7 +11,8 @@ herb.marker({ color: 'magenta' }).line('<-->');
 
 herb.config({
 	logFile: './log',
-	prependTime: true
+	prependTime: true,
+	prefix: '# '
 });
 
 herb.humanify({
@@ -37,7 +38,7 @@ herb.table({
 	full: false
 });
 
-log('test', {}, 'null', 'more')
+log('test', {}, '', '')
 
 herb.paragraph("Anim magna velit ipsum id et dolor labore. Irure ipsum enim in laborum deserunt elit sit eu sit id et adipisicing eu do. Ad nulla ullamco excepteur consequat veniam ut. Tempor elit excepteur nulla pariatur irure nisi. Nostrud id cupidatat commodo non ex id nostrud amet pariatur.", { alignment: "center", color: "green", width: '50%', margin: '50%' });
 herb.log(herb.green('SUCCESS'), herb.underline('www.example.com'))
